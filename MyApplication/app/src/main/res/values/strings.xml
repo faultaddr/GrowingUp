@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">GrowingUp</string>
     <string name="title">title</string>
+    <string name="youth">青春相伴</string>
+    <string name="expert">专家顾问</string>
+    <string name="communist">党员特训</string>
+    <string name="thinking">有所思</string>
+    <string name="inspiration">有所悟</string>
+    <string name="accept">有所得</string>
 </resources>
