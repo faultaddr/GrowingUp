@@ -17,30 +17,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     //LinearLayout 声明
 
     @BindView(R.id.thinking)
-    private LinearLayout thinking;//有所思
+    public LinearLayout thinking;//有所思
     @BindView(R.id.inspire)
-    private LinearLayout inspire;//有所悟
+    public LinearLayout inspire;//有所悟
     @BindView(R.id.accept)
-    private LinearLayout accept;//有所得
+    public LinearLayout accept;//有所得
     @BindView(R.id.youth)
-    private LinearLayout youth;//青春相伴
+    public LinearLayout youth;//青春相伴
     @BindView(R.id.expert)
-    private LinearLayout expert;//专家咨询
+    public LinearLayout expert;//专家咨询
     @BindView(R.id.communist)
-    private LinearLayout communism;//党员
+    public LinearLayout communism;//党员
     @BindView(R.id.mine)
-    private LinearLayout mine;//我
+    public LinearLayout mine;//我
 
     //widget 声明
 
     @BindView(R.id.haveAChange)
-    private TextView haveAChange;//换一换
+    public TextView haveAChange;//换一换
     @BindView(R.id.showAll)
-    private TextView showAll;//查看全部
+    public TextView showAll;//查看全部
     @BindView(R.id.teachers_list)
-    private RecyclerView teacherList;
+    public RecyclerView teacherList;
     @BindView(R.id.knowledge_news)
-    private RecyclerView knowledgeNews;
+    public RecyclerView knowledgeNews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void initAdapter() {
-        teacherList.setAdapter(new TeacherListAdapter());
+        teacherList.setAdapter(new TeacherListAdapter(this,));
         knowledgeNews.setAdapter(new KnowledgeNewsAdapter());
     }
 

@@ -122,6 +122,9 @@
         android:layout_height="60dp"
         android:layout_marginLeft="8dp"
         >
+
+
+
         <RelativeLayout
             android:id="@+id/knowledge_news"
             android:layout_width="match_parent"
@@ -147,7 +150,7 @@
         </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/knowlwdge_news_list"
-            android:layout_below="@id/knowlwdge_news"
+            android:layout_below="@id/knowledge_news"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -182,12 +185,25 @@
                     android:text="换一换↔"
                     />
             </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/teachers"
+                >
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/teachers_list"
-                android:layout_below="@id/teachers"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/main_activity_play"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    />
+
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 
