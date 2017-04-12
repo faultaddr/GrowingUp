@@ -6,13 +6,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.local.KnowledgeNewsList;
-import com.example.panyunyi.growingup.entity.local.TeacherList;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,22 +42,17 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public int getItemViewType(int position) {
-        //判断item类别，是图还是显示页数（图片有URL）
-        if (!TextUtils.isEmpty(datas.get(position).getKnowledgeNewsTitle())) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return 0;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         //根据item类别加载不同ViewHolder
-        if(viewType==0){
+
             View view = LayoutInflater.from(mContext
-            ).inflate(R.layout.main_activity_teacher_list_item, parent,
-                    false);//这个布局就是一个imageview用来显示图片
+            ).inflate(R.layout.main_activity_knowledge_list, parent,
+                    false);//这个布局是两个textView
             MyViewHolder holder = new MyViewHolder(view);
 
             //给布局设置点击和长点击监听
@@ -67,12 +60,7 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
             view.setOnLongClickListener(this);
 
             return holder;
-        }else{
-            MyViewHolder2 holder2=new MyViewHolder2(LayoutInflater.from(
-                    mContext).inflate(R.layout.page_item, parent,
-                    false));//这个布局就是一个textview用来显示页数
-            return holder2;
-        }
+
 
     }
 
@@ -80,9 +68,8 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if(holder instanceof MyViewHolder){
-            Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
-        }else if(holder instanceof MyViewHolder2){
-            ((MyViewHolder2) holder).tv.setText(datas.get(position).);
+            ((MyViewHolder) holder).titleView.setText(datas.get(position).getKnowledgeNewsTitle());
+            ((MyViewHolder) holder).contentView.setText(datas.get(position).getKnowledgeNewsContent());
         }
 
     }
@@ -109,25 +96,17 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
     }
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageView iv;
+        private TextView titleView;
+        private TextView contentView;
 
         public MyViewHolder(View view)
         {
             super(view);
-            iv = (ImageView) view.findViewById(R.id.iv);
+            contentView=(TextView) view.findViewById(R.id.knowledge_news_list_text_content);
+            titleView=(TextView)view.findViewById(R.id.knowledge_news_list_text_title);
         }
     }
-    //自定义ViewHolder，用于显示页数
-    class MyViewHolder2 extends RecyclerView.ViewHolder
-    {
-        private TextView tv;
 
-        public MyViewHolder2(View view)
-        {
-            super(view);
-            tv = (TextView) view.findViewById(R.id.tv);
-        }
-    }
 }
     //自定义ViewHolder，用于加载图片
 
