@@ -1,12 +1,18 @@
 package com.example.panyunyi.growingup;
 
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.adapter.KnowledgeNewsAdapter;
 import com.example.panyunyi.growingup.ui.adapter.TeacherListAdapter;
 
@@ -42,10 +48,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.knowledge_news)
     public RecyclerView knowledgeNews;
 
+    private MsgService msgService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent("com.example.communication.MSG_ACTION");
+        bindService(intent, conn, Context.BIND_AUTO_CREATE);
         initListener();//初始化监听器
         initAdapter();//初始化适配器
 
@@ -53,7 +63,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private void initAdapter() {
         teacherList.setAdapter(new TeacherListAdapter(this,));
-        knowledgeNews.setAdapter(new KnowledgeNewsAdapter());
+        knowledgeNews.setAdapter(new KnowledgeNewsAdapter(this,msgService.getKnowledge()));
     }
 
     private void initListener() {
@@ -118,4 +128,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 * */
         }
     }
+    ServiceConnection conn = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //返回一个MsgService对象
+            msgService = ((MsgService.MsgBinder)service).getService();
+
+        }
+    };
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.panyunyi.growingup.R;
@@ -111,12 +112,12 @@ public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnC
     //自定义ViewHolder，用于加载图片
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageButton iv;
+        private ImageView iv;
 
         public MyViewHolder(View view)
         {
             super(view);
-            iv = (ImageButton) view.findViewById(R.id.iv);
+            iv = (ImageView) view.findViewById(R.id.iv);
         }
     }
     //自定义ViewHolder，用于显示页数
