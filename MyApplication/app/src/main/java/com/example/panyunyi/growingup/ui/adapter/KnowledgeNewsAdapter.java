@@ -3,6 +3,7 @@ package com.example.panyunyi.growingup.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,10 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
 
     //适配器初始化
     public KnowledgeNewsAdapter(Context context,List<KnowledgeNewsList> datas) {
+        Log.i(">>onCreatAdapter","start");
         mContext=context;
         this.datas=datas;
+        Log.i(">>datas.size()",""+datas.size());
     }
 
     @Override
@@ -49,7 +52,7 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         //根据item类别加载不同ViewHolder
-
+        Log.i(">>onCreatViewHolder","start");
             View view = LayoutInflater.from(mContext
             ).inflate(R.layout.main_activity_knowledge_list, parent,
                     false);//这个布局是两个textView

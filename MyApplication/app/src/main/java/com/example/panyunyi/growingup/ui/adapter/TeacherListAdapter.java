@@ -1,6 +1,7 @@
 package com.example.panyunyi.growingup.ui.adapter;
 
 import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -79,7 +80,8 @@ public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnC
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if(holder instanceof MyViewHolder){
-            Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
+            //Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
+            ((MyViewHolder) holder).iv.setImageResource(R.mipmap.ic_launcher);
         }else if(holder instanceof MyViewHolder2){
             ((MyViewHolder2) holder).tv.setText(datas.get(position).getPage()+"页");
         }
