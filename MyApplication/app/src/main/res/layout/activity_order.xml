@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.panyunyi.growingup.ui.activity.OrderActivity">
+    <LinearLayout
+        android:id="@+id/calendar_layout"
+        app:layout_heightPercent="30%"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <DatePicker
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </DatePicker>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/timepicker_layout"
+        app:layout_heightPercent="20%"
+        android:layout_below="@id/calendar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        >
+    <TimePicker
+        android:timePickerMode="spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        >
+
+    </TimePicker>
+    </LinearLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/timepicker_layout"
+        android:layout_height="match_parent"
+        app:layout_heightPercent="40%"
+
+        >
+        <TableRow>
+            <TextView
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="qwr"
+                android:background="@drawable/baseline"
+                />
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_width="match_parent"
+            >
+
+            <TextView
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="qwr"
+                android:layout_gravity="center"
+                />
+
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_height="30dp"
+                android:layout_width="match_parent"
+                android:text="qwr"
+
+                />
+        </TableRow>
+
+    </TableLayout>
+    <LinearLayout
+
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        >
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/sendRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/send"
+            android:background="@drawable/button_background"
+            />
+
+
+
+    </LinearLayout>
+</android.support.percent.PercentRelativeLayout>

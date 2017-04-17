@@ -29,6 +29,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.panyunyi.growingup.service.MsgService;
+import com.example.panyunyi.growingup.ui.activity.ThinkingActivity;
 import com.example.panyunyi.growingup.ui.adapter.KnowledgeNewsAdapter;
 import com.example.panyunyi.growingup.ui.adapter.MainViewPagerAdapter;
 import com.example.panyunyi.growingup.ui.adapter.TeacherListAdapter;
@@ -218,6 +219,10 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 有所思页面
                 * */
+                Intent intent=new Intent();
+                intent.setClass(this, ThinkingActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.inspire:
                 /*

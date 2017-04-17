@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.panyunyi.growingup.ui.activity.ThinkingActivity">
+
+
+<LinearLayout
+    android:id="@+id/tab"
+    app:layout_heightPercent="5%"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="4"
+    android:gravity="center_horizontal"
+
+    >
+    <TextView
+        android:id="@+id/text1"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="思想阵地"
+        android:background="@drawable/baseline"
+
+        />
+
+    <TextView
+        android:id="@+id/text2"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="心灵港湾"
+        android:background="@drawable/baseline"
+        />
+    <TextView
+        android:id="@+id/text3"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="为人处世"
+        android:background="@drawable/baseline"
+        />
+    <TextView
+        android:id="@+id/text4"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="说话办文"
+        android:background="@drawable/baseline"
+        />
+</LinearLayout>
+<RelativeLayout
+    app:layout_heightPercent="95%"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_below="@id/tab"
+    >
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@android:drawable/ic_input_add" />
+    <android.support.v4.view.ViewPager
+
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+</RelativeLayout>
+
+</android.support.percent.PercentRelativeLayout>

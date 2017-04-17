@@ -15,17 +15,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:enabled="true"
-            android:exported="true"
-            android:name=".service.MsgService">
+
+        <service
+            android:name=".service.MsgService"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE">
-
-                </action>
-
+                <action android:name="android.intent.action.RESPOND_VIA_MESSAGE" />
             </intent-filter>
-
         </service>
+
+        <activity
+            android:name=".ui.activity.ThinkingActivity"
+            android:label="@string/title_activity_thinking"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ui.activity.OrderActivity"></activity>
     </application>
 
 </manifest>
