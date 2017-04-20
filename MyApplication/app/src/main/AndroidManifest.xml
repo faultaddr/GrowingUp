@@ -29,7 +29,11 @@
             android:name=".ui.activity.ThinkingActivity"
             android:label="@string/title_activity_thinking"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ui.activity.OrderActivity"></activity>
+        <activity android:name=".ui.activity.OrderActivity" />
+        <activity
+            android:name=".ui.activity.InspireActivity"
+            android:label="@string/title_activity_inspire"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

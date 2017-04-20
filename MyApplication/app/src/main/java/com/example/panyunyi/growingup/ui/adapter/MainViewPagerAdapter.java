@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -28,12 +29,12 @@ import static java.lang.Integer.MAX_VALUE;
 
 public class MainViewPagerAdapter extends PagerAdapter {
     private Context context;
-    private int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
+    private ArrayList<ImageView>imageViews=new ArrayList<>();
 
-    public MainViewPagerAdapter(Context mcontext) {
+    public MainViewPagerAdapter(Context mcontext,ArrayList<ImageView>mimageViews) {
         context=mcontext;
-
-
+        imageViews=mimageViews;
+        Log.i(">>imageviews",""+imageViews.size());
     }
 
     @Override
@@ -45,17 +46,8 @@ public class MainViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         position=position%4;
-        InputStream is = context.getResources().openRawResource(id[position]);
-        BitmapFactory.Options options=new BitmapFactory.Options();
-        options.inJustDecodeBounds = false;
-        options.inSampleSize = 10; //width，hight设为原来的十分之一
-        Bitmap btp =BitmapFactory.decodeStream(is,null,options);
-
-        ImageView imageView=new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setImageBitmap(btp);
-        container.addView(imageView);
-        return imageView;
+        container.addView(imageViews.get(position));
+        return (ImageView)imageViews.get(position);
     }
 
     @Override

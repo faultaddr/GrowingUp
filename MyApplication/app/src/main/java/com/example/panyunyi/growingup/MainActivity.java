@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -24,17 +26,20 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.panyunyi.growingup.service.MsgService;
+import com.example.panyunyi.growingup.ui.activity.InspireActivity;
 import com.example.panyunyi.growingup.ui.activity.ThinkingActivity;
 import com.example.panyunyi.growingup.ui.adapter.KnowledgeNewsAdapter;
 import com.example.panyunyi.growingup.ui.adapter.MainViewPagerAdapter;
 import com.example.panyunyi.growingup.ui.adapter.TeacherListAdapter;
 import com.example.panyunyi.growingup.ui.custom.ZoomOutPageTransformer;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.Executors;
@@ -93,6 +98,10 @@ public class MainActivity extends BaseActivity {
     float y1 = 0;
     float y2 = 0;
     boolean TAG_MOTION=false;
+    private boolean TAG_DATA;
+
+    int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
+    ArrayList<ImageView>imageViews=new ArrayList<>();
     public Handler mHandler = new Handler() {
 
 
@@ -113,21 +122,28 @@ public class MainActivity extends BaseActivity {
                     viewPager.setCurrentItem(count);
                     viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
                     break;
-
-
+                case 2:
+                    viewPager.setAdapter(new MainViewPagerAdapter(MainActivity.this,imageViews));
+                    break;
             }
             super.handleMessage(msg);
         }
     };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //5.0以上的service要显性声明
-        Intent intent=new Intent(this,MsgService.class);
+        Intent intent = new Intent(this, MsgService.class);
         bindService(intent, conn, Context.BIND_AUTO_CREATE);
         ButterKnife.bind(this);
+        initData();
+
+
+
 
         main.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         initAdapter();//初始化适配器
@@ -135,6 +151,30 @@ public class MainActivity extends BaseActivity {
 
 
 
+    }
+
+    private void initData() {
+        new Thread() {
+            public void run() {
+                for (int i = 0; i < 4; i++) {
+                    InputStream is = MainActivity.this.getResources().openRawResource(id[i]);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = false;
+                    options.inSampleSize = 10; //width，hight设为原来的十分之一
+                    Bitmap btp = BitmapFactory.decodeStream(is, null, options);
+
+                    ImageView imageView = new ImageView(MainActivity.this);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(btp);
+                    imageViews.add(imageView);
+
+                }
+                Message msg=new Message();
+                msg.what=2;
+                mHandler.sendMessage(msg);
+
+            }
+        }.start();
     }
 
 
@@ -159,8 +199,8 @@ public class MainActivity extends BaseActivity {
         knowledgeNews.setAdapter(new KnowledgeNewsAdapter(this,msgService.getKnowledge()));
 
 
-        //初始化顶部图片轮播：
-        viewPager.setAdapter(new MainViewPagerAdapter(this));
+
+
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -214,12 +254,13 @@ public class MainActivity extends BaseActivity {
     }
     @OnClick({R.id.thinking, R.id.inspire, R.id.accept,R.id.youth,R.id.expert,R.id.communist,R.id.mine})
     void butterknifeOnItemClick(View view){
+        Intent intent=new Intent();
         switch (view.getId()){
             case R.id.thinking:
                 /*
                 * 有所思页面
                 * */
-                Intent intent=new Intent();
+
                 intent.setClass(this, ThinkingActivity.class);
                 startActivity(intent);
 
@@ -228,6 +269,9 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 有所感页面
                 * */
+                intent.setClass(this, InspireActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.accept:
                 /*
