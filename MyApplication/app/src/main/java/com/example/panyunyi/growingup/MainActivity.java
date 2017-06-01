@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.activity.InspireActivity;
+import com.example.panyunyi.growingup.ui.activity.MineActivity;
 import com.example.panyunyi.growingup.ui.activity.ThinkingActivity;
 import com.example.panyunyi.growingup.ui.adapter.KnowledgeNewsAdapter;
 import com.example.panyunyi.growingup.ui.adapter.MainViewPagerAdapter;
@@ -307,6 +308,10 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 我的
                 * */
+                intent.setClass(this, MineActivity.class);
+                startActivity(intent);
+                onPause();
+
         }
 
     }

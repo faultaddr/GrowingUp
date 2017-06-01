@@ -11,4 +11,10 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_inspire">InspireActivity</string>
+
+    <declare-styleable name="round_imageview">
+        <attr name="border_color" format="color"/>
+        <attr name="border_width" format="dimension"/>
+        <attr name="circle" format="boolean"/>
+    </declare-styleable>
 </resources>

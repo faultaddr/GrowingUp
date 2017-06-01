@@ -23,13 +23,14 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.example.panyunyi.growingup.BaseActivity;
 import com.example.panyunyi.growingup.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ThinkingActivity extends AppCompatActivity {
+public class ThinkingActivity extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide

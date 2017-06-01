@@ -9,13 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.panyunyi.growingup.BaseActivity;
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.ui.adapter.InspireAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class InspireActivity extends AppCompatActivity {
+public class InspireActivity extends BaseActivity {
     @BindView(R.id.inspire_main)
     RecyclerView recyclerViewInspire;
 

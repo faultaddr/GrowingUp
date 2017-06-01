@@ -3,9 +3,10 @@ package com.example.panyunyi.growingup.ui.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.panyunyi.growingup.BaseActivity;
 import com.example.panyunyi.growingup.R;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrderActivity extends BaseActivity {
     private  int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
