@@ -7,12 +7,54 @@
     tools:context="com.example.panyunyi.growingup.MainActivity"
     android:orientation="vertical"
     android:id="@+id/main"
+    app:layout_heightPercent="100%"
     >
+    <RelativeLayout
+        android:id="@+id/find"
+
+        app:layout_heightPercent="6%"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+
+        >
+        <ImageView
+            android:id="@+id/search"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/accept_activity_search"
+            />
+<TextView
+    android:layout_gravity="center"
+    android:layout_marginLeft="16dp"
+    android:layout_centerInParent="true"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="发现"
+    android:textSize="20dp"
+    android:layout_marginRight="16dp"
+
+    />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/find"
+        android:background="@drawable/single_line"
+
+        >
+
+
+    </View>
     <ScrollView
-        app:layout_heightPercent="92%"
+        android:layout_marginTop="8dp"
+        app:layout_heightPercent="84%"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/find"
+
+        >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

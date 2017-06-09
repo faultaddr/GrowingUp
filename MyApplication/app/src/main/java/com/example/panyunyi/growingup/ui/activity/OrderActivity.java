@@ -1,9 +1,8 @@
 package com.example.panyunyi.growingup.ui.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.panyunyi.growingup.BaseActivity;
+import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.R;
 
 public class OrderActivity extends BaseActivity {

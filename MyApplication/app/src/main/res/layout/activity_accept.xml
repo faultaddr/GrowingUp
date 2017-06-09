@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.example.panyunyi.growingup.ui.activity.AcceptActivity">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/accept_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="标题"
+        android:text="体会之深涛涛江水不可绝"
+        android:textCursorDrawable="@drawable/accept_activity_cusor"
+        app:met_baseColor="@android:color/holo_blue_bright"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="20"
+        app:met_primaryColor="?colorAccent" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/accept_edit_text"
+        app:layout_heightPercent="70%"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="
+       1.交流感受\n
+       2.交流体会\n
+       3.交流心得\n
+       4.仍待交流事项\n
+"
+        android:text=""
+        android:textCursorDrawable="@drawable/accept_activity_cusor"
+        android:gravity="start"
+        android:textSize="16sp"
+        app:met_baseColor="@android:color/holo_red_light"
+        app:met_floatingLabel="highlight"
+        app:met_maxCharacters="6000"
+        app:met_primaryColor="?colorAccent"
+        app:met_singleLineEllipsis="true"
+        android:layout_below="@id/accept_activity_title"
+        />
+
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/accept_activity_send"
+        android:layout_below="@id/accept_edit_text"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        />
+</android.support.percent.PercentRelativeLayout>
