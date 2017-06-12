@@ -23,7 +23,8 @@ public class PartyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party);
-
+        View view = this.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(false);
         image = (MovingImageView) findViewById(R.id.image);
         image.getMovingAnimator().addListener(new Animator.AnimatorListener() {
             @Override
@@ -66,17 +67,7 @@ public class PartyActivity extends AppCompatActivity {
         Toast.makeText(this, "Next picture", Toast.LENGTH_SHORT).show();
     }
 
-    public void clickText(View v) {
-        if(toggleCustomMovement) {
-            image.getMovingAnimator().addCustomMovement().addDiagonalMoveToDownRight().addHorizontalMoveToLeft().addDiagonalMoveToUpRight()
-                    .addVerticalMoveToDown().addHorizontalMoveToLeft().addVerticalMoveToUp().start();
-            Toast.makeText(this, "Custom movement", Toast.LENGTH_SHORT).show();
-        } else {
-            image.getMovingAnimator().clearCustomMovement();
-            Toast.makeText(this, "Default movement", Toast.LENGTH_SHORT).show();
-        }
-        toggleCustomMovement = !toggleCustomMovement;
-    }
+
 
     @Override
     protected void onStop() {

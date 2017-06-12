@@ -7,15 +7,14 @@
     android:background="#ffffff"
     android:orientation="vertical">
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.example.panyunyi.growingup.ui.custom.QuickScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <net.grobas.view.MovingImageView
@@ -25,6 +24,7 @@
             android:clickable="true"
             android:onClick="clickImage"
             android:src="@drawable/anotherworld"
+            android:focusable="false"
             app:miv_load_on_create="true"
             app:miv_max_relative_size="3.0"
             app:miv_min_relative_offset="0.2"
@@ -50,12 +50,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/image"
-            android:clickable="true"
-            android:onClick="clickText"
             android:padding="16dp"
             android:text="@string/text" />
 
     </RelativeLayout>
 
-</ScrollView>
+</com.example.panyunyi.growingup.ui.custom.QuickScrollView>
 </LinearLayout>
