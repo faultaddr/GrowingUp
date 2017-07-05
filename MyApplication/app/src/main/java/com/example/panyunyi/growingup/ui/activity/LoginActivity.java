@@ -129,10 +129,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         mHeight = mBtnLogin.getMeasuredHeight();
         nameString=userId.getText().toString();
         psString=passWord.getText().toString();
+        inputAnimator(mInputLayout, mWidth, mHeight);
         mName.setVisibility(View.INVISIBLE);
         mPsw.setVisibility(View.INVISIBLE);
 
-        inputAnimator(mInputLayout, mWidth, mHeight);
+
         Message message=new Message();
         message.what=2;
         handler.sendMessage(message);
