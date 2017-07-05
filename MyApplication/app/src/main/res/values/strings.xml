@@ -31,5 +31,13 @@
         <item>"Vadim Ooleynik"</item>
     </string-array>
     <string name="text">"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."\n\n"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</string>
-
+    <string name="dialog_interact">在这里可以找到与你有同样兴趣或者疑惑的小伙伴，一同建立线上微信小组，与组内老师进行及时有效的沟通，与小伙伴一同分享、相互帮助、共同进步！</string>
+    <string name="dialog_homework">预约辅导后针对性设计小作业，小作业兼具实效性与趣味性，能让你在有限的时间内进行吸收和消化，加深对辅导内容的理解，培养应用意识和创新意识，巩固辅导效果，为后续问题的解决提供更坚实的基础！</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activity_thinking2">如何缓解长时间的情绪低落？如何调节差距带来的心理落差？如何克服考试升学就业压力带来的焦虑？如何正确对待情感问题……
+工作室思政队伍有丰富的实践经验，沟通辅导方式多样，增强体验式教育，使学生通过辅导能够以良好的心理状态积极应对在成长中遇到的种种压力和困惑。</string>
+    <string name="activity_thinking1">青春是炽烈的，也是迷茫的。杨绛先生曾批评一个年轻人读得太少，想的太多。这又何尝不是当代大学生的迷茫。各种渠道获取的信息、观点和价值，让思想的池子有些混乱。不知该相信哪位关键意见领袖，人生不知何去何从。其实，学生们的问题有相似，老师也见过知道大家的迷惑。这个模块从师兄师姐经历那里，从老师经年的工作那里，获取值得你参考的方向选择，为你点亮一盏灯，拨开未来的迷雾。</string>
+    <string name="activity_thinking3">所谓“为人”是指一个人做人的风格与品位，所谓“处世”是指待人接物，应付世情。为人处世问题，作为一门学问，一门艺术，古今中外，论为人处世之道浩若繁星，博大精深，难以尽述，是一个人的终身必修课。在这一板块，你将知道在人际交往中如何提升个人主体人格、如何培养良好的心态、如何处理矛盾和纠纷等，掌握为人处世的原则、保持优良的为人处世姿态，在人际交往中如鱼得水，得心应手。</string>
+    <string name="activity_thinking4">所谓“说话办文”是指一个人的口头和书面表达行为。言语得失，小则牵系做人难易，大则连及国家兴亡，它是一门艺术，不但要措辞得体，更需要讲究策略。生为社会之人，先了解人，才能更好地做人；鉴前人之事，才能更好地做事。在这一板块，你将知道如何做好总结汇报，如何训练讲话逻辑思维、如何做好一次竞选演讲等，洞察说话办文的智慧。</string>
 </resources>

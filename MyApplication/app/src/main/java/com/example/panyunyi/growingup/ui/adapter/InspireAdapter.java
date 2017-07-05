@@ -17,7 +17,8 @@ import com.example.panyunyi.growingup.R;
 
 public class InspireAdapter  extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener{
     private Context context;
-    String []text=new String[]{"互动小组\n给相同特性的学生建立分组\n组内有辅导老师\n","针对学生预约主题\n针对性设计小作业\n巩固辅导效果\n","督促学生学习\n","督促学生学习\n"};
+    String []text=new String[]{"互动小组","小作业"};
+    int count=0;
     public InspireAdapter(Context mcontext){
         context=mcontext;
 
@@ -30,8 +31,8 @@ public class InspireAdapter  extends RecyclerView.Adapter implements View.OnClic
         void onItemClick(View view);
         void onItemLongClick(View view);
     }
-    private KnowledgeNewsAdapter.OnRecyclerViewItemClickListener mOnItemClickListener = null;
-    public void setOnItemClickListener(KnowledgeNewsAdapter.OnRecyclerViewItemClickListener listener) {
+    private InspireAdapter.OnRecyclerViewItemClickListener mOnItemClickListener = null;
+    public void setOnItemClickListener(InspireAdapter.OnRecyclerViewItemClickListener listener) {
         mOnItemClickListener = listener;
     }
     @Override
@@ -59,7 +60,7 @@ public class InspireAdapter  extends RecyclerView.Adapter implements View.OnClic
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 2;
     }
 
     //点击事件回调
@@ -84,6 +85,8 @@ public class InspireAdapter  extends RecyclerView.Adapter implements View.OnClic
 
         public MyViewHolder(View itemView) {
             super(itemView);
+
+            itemView.setTag(count++);
             simplifiedLogo=(ImageView)itemView.findViewById(R.id.imageview);
             textViewInfo=(TextView)itemView.findViewById(R.id.textIntroduction);
 

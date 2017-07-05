@@ -55,6 +55,7 @@ public class ThinkingActivity extends BaseActivity {
     private TextView[] view;
     private Context context;
     private int pos;// 记录当前到达的位置
+    static int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,10 +143,28 @@ public class ThinkingActivity extends BaseActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_thinking, container, false);
 
             WebView webView = (WebView) rootView.findViewById(R.id.thinking_activity_webview);
-            webView.loadData(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)), "text/html", "utf-8");
+            //解决乱码问题
+            webView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+            switch (count%4){
+                case 0:
+                    webView.loadData(getResources().getString(R.string.activity_thinking1), "text/html; charset=UTF-8",null);
+                    break;
+                case 1:
+                    webView.loadData(getResources().getString(R.string.activity_thinking2), "text/html; charset=UTF-8",null);
+                    break;
+                case 2:
+                    webView.loadData(getResources().getString(R.string.activity_thinking3), "text/html; charset=UTF-8",null);
+                    break;
+                case 3:
+                    webView.loadData(getResources().getString(R.string.activity_thinking4), "text/html; charset=UTF-8",null);
+                    break;
+
+            }
+            count++;
             return rootView;
         }
     }

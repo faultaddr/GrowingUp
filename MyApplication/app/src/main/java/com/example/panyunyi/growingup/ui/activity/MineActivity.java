@@ -24,8 +24,11 @@ import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.R;
 
@@ -60,20 +63,26 @@ public class MineActivity extends BaseActivity {
     RelativeLayout recommendLayout;
     @BindView(R.id.mine_activity_rmb)
     RelativeLayout rmbLayout;
-
-
+    @BindView(R.id.exit_button)
+    ImageView exitButton;
+    @BindView(R.id.user_name)
+    TextView userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine);
 
         ButterKnife.bind(this);
-
+        initView();
 
     }
 
+    private void initView() {
+        userName.setText(LoginSession.getLoginSession().getLoginedUser().getUserName());
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @OnClick({R.id.mine_activity_medal, R.id.mine_activity_account, R.id.mine_activity_message, R.id.mine_activity_setting, R.id.mine_activity_recommend, R.id.mine_activity_rmb})
+    @OnClick({R.id.mine_activity_medal, R.id.mine_activity_account, R.id.mine_activity_message, R.id.mine_activity_setting, R.id.mine_activity_recommend, R.id.mine_activity_rmb,R.id.exit_button})
     void butterknifeOnItemClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -88,16 +97,20 @@ public class MineActivity extends BaseActivity {
                 /*
                 * 账户
                 * */
+
                 break;
             case R.id.mine_activity_message:
                 /*
                 * 消息
                 * */
+                intent.setClass(this,MessageActivity.class);
+                startActivity(intent);
                 break;
             case R.id.mine_activity_setting:
                 /*
                 * 设置
                 */
+
                 Snackbar.make(view, "no setting now", Snackbar.LENGTH_SHORT)
                         .setAction("ok", null)
                         .show();
@@ -107,7 +120,7 @@ public class MineActivity extends BaseActivity {
                 * 推荐
                 * */
                 Resources res=getResources();
-                Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.main_activity_list_1);
+                Bitmap bmp= BitmapFactory.decodeResource(res, R.drawable.main_activity_communist);
                 String filePrefix= null;
                 try {
                     filePrefix = saveImageToGallery(this,bmp);
@@ -237,6 +250,8 @@ public class MineActivity extends BaseActivity {
                             .show();
                 }
                 break;
+            case R.id.exit_button:
+                LoginSession.getLoginSession().exit();
             default:
                 break;
         }

@@ -27,10 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.activity.AcceptActivity;
 import com.example.panyunyi.growingup.ui.activity.InspireActivity;
 import com.example.panyunyi.growingup.ui.activity.MineActivity;
+import com.example.panyunyi.growingup.ui.activity.OrderActivity;
 import com.example.panyunyi.growingup.ui.activity.PartyActivity;
 import com.example.panyunyi.growingup.ui.activity.ProfileActivity;
 import com.example.panyunyi.growingup.ui.activity.ThinkingActivity;
@@ -39,6 +41,13 @@ import com.example.panyunyi.growingup.ui.adapter.MainViewPagerAdapter;
 import com.example.panyunyi.growingup.ui.adapter.TeacherListAdapter;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.ui.custom.ZoomOutPageTransformer;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.DiskLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -84,7 +93,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main)
     PercentRelativeLayout main;
 
-
+    private Context mContext;
 
     private MsgService msgService=new MsgService();
     int count=0;
@@ -100,7 +109,9 @@ public class MainActivity extends BaseActivity {
     boolean TAG_MOTION=false;
     private boolean TAG_DATA;
 
-    int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
+    //轮播图片 URL 数组
+
+    //int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
     ArrayList<ImageView>imageViews=new ArrayList<>();
     public Handler mHandler = new Handler() {
 
@@ -123,7 +134,7 @@ public class MainActivity extends BaseActivity {
                     viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
                     break;
                 case 2:
-                    viewPager.setAdapter(new MainViewPagerAdapter(MainActivity.this,imageViews));
+                    viewPager.setAdapter(new MainViewPagerAdapter(mContext,imageViews));
                     break;
             }
             super.handleMessage(msg);
@@ -134,6 +145,36 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*
+        * Logger init and config
+        *
+        * */
+        Logger.addLogAdapter(new AndroidLogAdapter());
+        Logger.d("message");
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)  // (Optional) Whether to show thread info or not. Default true
+                .methodCount(0)         // (Optional) How many method line to show. Default 2
+                .methodOffset(3)        // (Optional) Skips some method invokes in stack trace. Default 5
+//        .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
+                .tag("My custom tag")   // (Optional) Custom tag for each log. Default PRETTY_LOGGER
+                .build();
+
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+
+        Logger.addLogAdapter(new AndroidLogAdapter() {
+            @Override public boolean isLoggable(int priority, String tag) {
+                return BuildConfig.DEBUG;
+            }
+        });
+
+        Logger.addLogAdapter(new DiskLogAdapter());
+
+        Logger.clearLogAdapters();
+
+
+        Log.i(">>>login",LoginSession.getLoginSession().getLoginedUser().getUserId()+"");
+        mContext=this;
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED||ContextCompat.checkSelfPermission(this,
@@ -165,18 +206,19 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        new Thread() {
-            public void run() {
                 for (int i = 0; i < 4; i++) {
-                    InputStream is = MainActivity.this.getResources().openRawResource(id[i]);
+/*                    InputStream is = MainActivity.this.getResources().openRawResource(id[i]);
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = 10; //width，hight设为原来的十分之一
-                    Bitmap btp = BitmapFactory.decodeStream(is, null, options);
-
+                    Bitmap btp = BitmapFactory.decodeStream(is, null, options);*/
+                    String urlList[]=new String[]{"http://i4.piimg.com/598503/1a04f984809c7f6f.png","http://i4.piimg.com/598503/b739722c397b4d71.jpg","http://i4.piimg.com/598503/c32b15e59da031b8.jpg","http://i4.piimg.com/598503/fbe9565586aa5fed.jpg"};
                     ImageView imageView = new ImageView(MainActivity.this);
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                    imageView.setImageBitmap(btp);
+/*                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(btp);*/
+                        Picasso.with(this).load(urlList[i]).resize(getWindow().getDecorView().getWidth(),100)
+                            .into(imageView);
+                    //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                     imageViews.add(imageView);
 
                 }
@@ -184,8 +226,6 @@ public class MainActivity extends BaseActivity {
                 msg.what=2;
                 mHandler.sendMessage(msg);
 
-            }
-        }.start();
     }
 
 
@@ -205,14 +245,34 @@ public class MainActivity extends BaseActivity {
         RecyclerView.LayoutManager layoutManagerKnowledge=new LinearLayoutManager(this);
         teacherList.setLayoutManager(layoutManagerTeacher);
         knowledgeNews.setLayoutManager(layoutManagerKnowledge);
+        TeacherListAdapter teacherListAdapter=new TeacherListAdapter(this,msgService.getTeacher());
+        teacherListAdapter.setOnItemClickListener(new TeacherListAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view) {
+                Intent intent=new Intent();
+                intent.setClass(mContext, OrderActivity.class);
+                startActivity(intent);
+            }
 
-        teacherList.setAdapter(new TeacherListAdapter(this,msgService.getTeacher()));
-        knowledgeNews.setAdapter(new KnowledgeNewsAdapter(this,msgService.getKnowledge()));
+            @Override
+            public void onItemLongClick(View view) {
 
+            }
+        });
+        teacherList.setAdapter(teacherListAdapter);
+        KnowledgeNewsAdapter knowledgeNewsAdapte=new KnowledgeNewsAdapter(this,msgService.getKnowledge());
+        knowledgeNewsAdapte.setOnItemClickListener(new KnowledgeNewsAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view) {
+                //TODO 这里是内建一个webview做查看 到时候还可以嵌入广告
+            }
 
-
-
-
+            @Override
+            public void onItemLongClick(View view) {
+                //TODO 这里是做预览
+            }
+        });
+        knowledgeNews.setAdapter(knowledgeNewsAdapte);
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -319,6 +379,7 @@ public class MainActivity extends BaseActivity {
                 * */
                 intent.setClass(this, PartyActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.mine:
                 /*
@@ -355,5 +416,19 @@ public class MainActivity extends BaseActivity {
             msg.what=1;
             mHandler.sendMessage(msg);
         }
+    }
+    public class CropSquareTransformation implements Transformation {
+        @Override public Bitmap transform(Bitmap source) {
+            int size = Math.min(source.getWidth(), source.getHeight());
+            int x = (source.getWidth() - size) / 2;
+            int y = (source.getHeight() - size) / 2;
+            Bitmap result = Bitmap.createBitmap(source, x, y, size, size);
+            if (result != source) {
+                source.recycle();
+            }
+            return result;
+        }
+
+        @Override public String key() { return "square()"; }
     }
 }

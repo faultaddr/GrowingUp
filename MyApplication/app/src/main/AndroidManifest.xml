@@ -2,8 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.panyunyi.growingup">
 
-    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission-sdk-23  android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE"/>
+    <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" />
+    <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,11 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -36,11 +39,19 @@
             android:name=".ui.activity.InspireActivity"
             android:label="@string/title_activity_inspire"
             android:theme="@style/AppTheme" />
-        <activity android:name=".TestActivty" />
+        <activity android:name=".TestActivty"></activity>
         <activity android:name=".ui.activity.MineActivity" />
         <activity android:name=".ui.activity.AcceptActivity" />
-        <activity android:name=".ui.activity.ProfileActivity"></activity>
-        <activity android:name=".ui.activity.PartyActivity"></activity>
+        <activity android:name=".ui.activity.ProfileActivity" />
+        <activity android:name=".ui.activity.PartyActivity" />
+        <activity android:name=".ui.activity.MessageActivity"/>
+        <activity android:name=".ui.activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

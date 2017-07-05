@@ -1,6 +1,7 @@
 package com.example.panyunyi.growingup.manager;
 
 import com.example.panyunyi.growingup.entity.remote.User;
+import com.example.panyunyi.growingup.entity.remote.UserInfo;
 
 /**
  * Created by panyu on 2017/6/9.
@@ -8,7 +9,7 @@ import com.example.panyunyi.growingup.entity.remote.User;
 
 public class LoginSession {
     static LoginSession sLoginSession =null;
-    private User loginedUser;
+    private UserInfo loginedUser;
     private LoginSession(){}
     public static LoginSession getLoginSession(){
         if(sLoginSession==null){
@@ -18,10 +19,13 @@ public class LoginSession {
 
 
     }
-    void setsLoginSession(User user){
+    public void exit(){
+        sLoginSession=null;
+    }
+    void setsLoginSession(UserInfo user){
         loginedUser=user;
     }
-    public User getLoginedUser(){
+    public UserInfo getLoginedUser(){
         return loginedUser;
     }
 }

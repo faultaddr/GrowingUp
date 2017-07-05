@@ -7,17 +7,11 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-import android.app.Activity;
 
 import android.content.Intent;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,22 +23,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.example.panyunyi.growingup.ACache;
+import com.example.panyunyi.growingup.MainActivity;
+import com.example.panyunyi.growingup.entity.remote.User;
+import com.example.panyunyi.growingup.manager.LoginImpl;
+import com.example.panyunyi.growingup.util.ACache;
 import com.example.panyunyi.growingup.R;
+import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.ui.custom.JellyInterpolator;
+import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 
-
-public class LoginActivity extends AppCompatActivity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
     //TODO-LIST: 增加注册页面
     private TextView mBtnLogin;
 
@@ -84,13 +79,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         initView();
 
 
-        if(getIntent()!=null) {
-            Intent intent=getIntent();
-            Log.i("intent",intent.toString());
-            userId.setText(intent.getStringExtra("userId"));
-            passWord.setText(intent.getStringExtra("passWord"));
-            nameString=intent.getStringExtra("userId");
-            psString=intent.getStringExtra("passWord");
+//        if(getIntent()!=null) {
+//            Intent intent=getIntent();
+//            Log.i("intent",intent.toString());
+//            userId.setText(intent.getStringExtra("userId"));
+//            passWord.setText(intent.getStringExtra("passWord"));
+//            nameString=intent.getStringExtra("userId");
+//            psString=intent.getStringExtra("passWord");
 //            Bundle bundle=new Bundle();
 //            bundle.putString("userId",nameString);
 //            bundle.putString("passWord",psString);
@@ -99,14 +94,14 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
 //            msg.setData(bundle);
 //            Log.i("msgg",msg.toString());
 //            handler.sendMessage(msg);
-
-        }
-        ACache mCache=ACache.get(getApplication(),"User");
-        if(mCache.getAsString("username")!=null){
-            Message msg=new Message();
-            msg.what=1;
-            handler.sendMessage(msg);
-        }
+//
+//        }
+//        ACache mCache=ACache.get(getApplication(),"User");
+//        if(mCache.getAsString("username")!=null){
+//            Message msg=new Message();
+//            msg.what=1;
+//            handler.sendMessage(msg);
+//        }
     }
 
     private void initView() {
@@ -138,7 +133,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         mPsw.setVisibility(View.INVISIBLE);
 
         inputAnimator(mInputLayout, mWidth, mHeight);
-
+        Message message=new Message();
+        message.what=2;
+        handler.sendMessage(message);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -233,7 +230,25 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener 
         @Override
         public void handleMessage(Message msg)
         {
+            switch (msg.what){
+                case 2:
+                    User user=new User();
+                    user.userId=nameString;
+                    user.userPassword=psString;
+                    Log.i(">>>",nameString);
+                    Log.i(">>>",psString);
+                    LoginImpl login=new LoginImpl(user);
+                    boolean result=login.login();
+                    Log.i(">>>result",result+"");
+                    if(result)
+                    {
+                        Intent intent=new Intent();
+                        intent.setClass(getBaseContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    break;
 
+            }
 
             super.handleMessage(msg);
         }
