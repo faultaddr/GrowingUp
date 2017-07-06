@@ -97,7 +97,8 @@ public class MineActivity extends BaseActivity {
                 /*
                 * 账户
                 * */
-
+                intent.setClass(this,InfoActivity.class);
+                startActivity(intent);
                 break;
             case R.id.mine_activity_message:
                 /*

@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -21,12 +22,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
 import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.activity.AcceptActivity;
@@ -41,6 +47,8 @@ import com.example.panyunyi.growingup.ui.adapter.MainViewPagerAdapter;
 import com.example.panyunyi.growingup.ui.adapter.TeacherListAdapter;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.ui.custom.ZoomOutPageTransformer;
+import com.example.panyunyi.growingup.ui.dialog.ContentDialog;
+import com.example.panyunyi.growingup.ui.dialog.WebViewDialog;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
@@ -49,9 +57,14 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -59,7 +72,13 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+import  com.example.panyunyi.growingup.Constant;
 public class MainActivity extends BaseActivity {
 
     //LinearLayout 声明
@@ -108,7 +127,11 @@ public class MainActivity extends BaseActivity {
     float y2 = 0;
     boolean TAG_MOTION=false;
     private boolean TAG_DATA;
-
+    //网络请求相关
+    String result;
+    public static final MediaType JSONs
+            = MediaType.parse("application/json; charset=utf-8");
+    OkHttpClient client = new OkHttpClient();
     //轮播图片 URL 数组
 
     //int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
@@ -237,15 +260,15 @@ public class MainActivity extends BaseActivity {
 
     private void initAdapter() {
         //初始化 RecycleViewAdapter：
-        msgService.startDownLoad();
-        msgService.startGetInfo();
         teacherList.setHasFixedSize(true);
         knowledgeNews.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManagerTeacher=new LinearLayoutManager(this);
         RecyclerView.LayoutManager layoutManagerKnowledge=new LinearLayoutManager(this);
         teacherList.setLayoutManager(layoutManagerTeacher);
         knowledgeNews.setLayoutManager(layoutManagerKnowledge);
-        TeacherListAdapter teacherListAdapter=new TeacherListAdapter(this,msgService.getTeacher());
+        //TODO: 获取老师信息的后端API还没有做好
+
+        /*TeacherListAdapter teacherListAdapter=new TeacherListAdapter(this,msgService.getTeacher());
         teacherListAdapter.setOnItemClickListener(new TeacherListAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view) {
@@ -259,16 +282,28 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        teacherList.setAdapter(teacherListAdapter);
-        KnowledgeNewsAdapter knowledgeNewsAdapte=new KnowledgeNewsAdapter(this,msgService.getKnowledge());
+        teacherList.setAdapter(teacherListAdapter);*/
+        final KnowledgeNewsAdapter knowledgeNewsAdapte=new KnowledgeNewsAdapter(this,msgService.getKnowledge());
         knowledgeNewsAdapte.setOnItemClickListener(new KnowledgeNewsAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view) {
+            public void onItemClick(View view,int pos) {
                 //TODO 这里是内建一个webview做查看 到时候还可以嵌入广告
+/*                View rootView = View.inflate(mContext,R.layout.fragment_thinking,null);
+                Log.i(">>>",pos+"");
+                WebView webView = (WebView) rootView.findViewById(R.id.thinking_activity_webview);*/
+/*                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");*/
+                Log.i(">>>",pos+"");
+
+                WebViewDialog dialog=WebViewDialog.newInstance(Constant.API_URL+"/showArticle?num="+(pos+1));
+
+                dialog.show(getSupportFragmentManager(),"dialog");
+/*                intent.setData(content_url);
+                startActivity(intent);*/
             }
 
             @Override
-            public void onItemLongClick(View view) {
+            public void onItemLongClick(View view,int pos) {
                 //TODO 这里是做预览
             }
         });
@@ -323,7 +358,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.thinking, R.id.inspire, R.id.accept,R.id.youth,R.id.expert,R.id.communist,R.id.mine})
+    @OnClick({R.id.thinking, R.id.inspire, R.id.accept,R.id.showAll,R.id.youth,R.id.expert,R.id.communist,R.id.mine})
     void butterknifeOnItemClick(View view){
         Intent intent=new Intent();
         switch (view.getId()){
@@ -355,6 +390,24 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 显示全部
                 * */
+                try {
+                    ExecutorService exs = Executors.newCachedThreadPool();
+                    Post p=new Post(Constant.API_URL+"/showArticle","aaa");
+                    Future<Object> future = exs.submit(p);//使用线程池对象执行任务并获取返回对象
+                    try {
+                        result = future.get().toString();//当调用了future的get方法获取返回的值得时候
+                        //如果线程没有计算完成，那么这里就会一直阻塞等待线程执行完成拿到返回值
+                        Log.i(">>>result",result);
+                        List<GArticleEntity> list=JSON.parseArray(result,GArticleEntity.class);
+                        KnowledgeNewsAdapter knowledgeNewsAdapte=new KnowledgeNewsAdapter(this,list);
+
+                        exs.shutdown();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case R.id.haveAChange:
                 /*
@@ -379,7 +432,7 @@ public class MainActivity extends BaseActivity {
                 * */
                 intent.setClass(this, PartyActivity.class);
                 startActivity(intent);
-                finish();
+                onPause();
                 break;
             case R.id.mine:
                 /*
@@ -430,5 +483,32 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override public String key() { return "square()"; }
+    }
+    class Post implements Callable{
+        String url;
+        String json;
+
+        public Post(String url, String json) {
+            this.url = url;
+
+            this.json = json;
+
+        }
+    String post() throws IOException {
+        RequestBody body =RequestBody.create(JSONs,json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        Log.i(">>>", json);
+        String r=response.body().string();
+        return r;
+    }
+
+        @Override
+        public Object call() throws Exception {
+            return post();
+        }
     }
 }

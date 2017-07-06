@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.local.KnowledgeNewsList;
+import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,14 +22,21 @@ import java.util.List;
  * MailBox cufer@foxmail.com
  */
 
-public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener{
+public class KnowledgeNewsAdapter extends RecyclerView.Adapter{
     private Context mContext;
-    private List<KnowledgeNewsList> datas;//数据
+    private List<GArticleEntity> datas;//数据
+
+    public int getmPosition() {
+
+        return mPosition;
+    }
+
+    private int mPosition;
 
     //自定义监听事件
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view);
-        void onItemLongClick(View view);
+        void onItemClick(View view,int pos);
+        void onItemLongClick(View view,int pos);
     }
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -36,7 +44,7 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
     }
 
     //适配器初始化
-    public KnowledgeNewsAdapter(Context context,List<KnowledgeNewsList> datas) {
+    public KnowledgeNewsAdapter(Context context,List<GArticleEntity> datas) {
         Log.i(">>onCreatAdapter","start");
         mContext=context;
         this.datas=datas;
@@ -45,7 +53,12 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
     }
 
     @Override
@@ -56,11 +69,27 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
             View view = LayoutInflater.from(mContext
             ).inflate(R.layout.main_activity_knowledge_list, parent,
                     false);//这个布局是两个textView
-            MyViewHolder holder = new MyViewHolder(view);
+            view.setTag("");
+            final MyViewHolder holder = new MyViewHolder(view);
 
             //给布局设置点击和长点击监听
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v,holder.getAdapterPosition());
+                    }
+                }
+            });
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemClickListener!= null) {
+                        mOnItemClickListener.onItemLongClick(v,holder.getAdapterPosition());
+                    }
+                    return false;
+                }
+            });
 
             return holder;
 
@@ -70,9 +99,10 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
+        mPosition=position;
         if(holder instanceof MyViewHolder){
-            ((MyViewHolder) holder).titleView.setText(datas.get(position).getKnowledgeNewsTitle());
-            ((MyViewHolder) holder).contentView.setText(datas.get(position).getKnowledgeNewsContent());
+            ((MyViewHolder) holder).titleView.setText(datas.get(position).getArticleContent());
+            ((MyViewHolder) holder).contentView.setText(datas.get(position).getArticleContent());
         }
 
     }
@@ -83,20 +113,9 @@ public class KnowledgeNewsAdapter extends RecyclerView.Adapter implements View.O
         return datas.size();//获取数据的个数
     }
 
+
     //点击事件回调
-    @Override
-    public void onClick(View v) {
-        if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(v);
-        }
-    }
-    @Override
-    public boolean onLongClick(View v) {
-        if (mOnItemClickListener!= null) {
-            mOnItemClickListener.onItemLongClick(v);
-        }
-        return false;
-    }
+
     class MyViewHolder extends RecyclerView.ViewHolder
     {
         private TextView titleView;

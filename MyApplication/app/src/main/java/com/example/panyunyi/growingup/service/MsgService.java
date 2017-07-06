@@ -4,93 +4,69 @@ import android.app.Service;
 import android.content.Intent;  
 import android.os.Binder;  
 import android.os.IBinder;
+import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.example.panyunyi.growingup.Constant;
 import com.example.panyunyi.growingup.entity.local.KnowledgeNewsList;
 import com.example.panyunyi.growingup.entity.local.TeacherList;
+import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
+import com.example.panyunyi.growingup.manager.LoginImpl;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static com.example.panyunyi.growingup.Constant.JSONs;
 
 public class MsgService extends Service {
-    private List<String>title=new ArrayList<>();
-    private List<String>content=new ArrayList<>();
+
     private List<KnowledgeNewsList>knowledgeNewsLists=new ArrayList<>();
-    private List<String>url=new ArrayList<>();
-    private List<String>page=new ArrayList<>();
+
     private List<TeacherList>teacherLists=new ArrayList<>();
-    private boolean TAG_Knowledge=false;
-    private boolean TAG_Teacher=false;
 
-    /**
-     * 增加get()方法，供Activity调用 
-     * @return 下载进度 
-     */
-    public List<KnowledgeNewsList> getKnowledge() {
 
-        while(TAG_Knowledge==false){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    OkHttpClient client = new OkHttpClient();
+
+
+    public List<GArticleEntity> getKnowledge() {
+
+        ExecutorService exs = Executors.newCachedThreadPool();
+
+
+        getArticle ct = new getArticle(Constant.API_URL+"/showArticle");//实例化任务对象
+        //大家对Future对象如果陌生，说明你用带返回值的线程用的比较少，要多加练习
+        Future<Object> future = exs.submit(ct);//使用线程池对象执行任务并获取返回对象
+        List<GArticleEntity>list = null;
+        try {
+            String result=future.get().toString();
+            Log.i("result",result);
+            list= JSON.parseArray(result,GArticleEntity.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
-        for (int i=0;i<title.size();i++){
-            KnowledgeNewsList knowledgeNewsList=new KnowledgeNewsList();
-            knowledgeNewsList.setKnowledgeNewsContent(content.get(i));
-            knowledgeNewsList.setKnowledgeNewsTitle(title.get(i));
-            knowledgeNewsLists.add(knowledgeNewsList);
-
-        }
-        return knowledgeNewsLists;
+        return list;
     }
-
+/*
     public List<TeacherList>getTeacher(){
-        while(TAG_Teacher==false){
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        for(int i=0;i<page.size();i++){
-            TeacherList teacherList=new TeacherList();
-            teacherList.setUrl(url.get(i));
-            teacherList.setPage(Integer.parseInt(page.get(i)));
-            teacherLists.add(teacherList);
-        }
-        return teacherLists;
-    }
-    /** 
-     * 获取后台数据
-     */  
-    public void startGetInfo(){
-        new Thread(new Runnable() {  
-              
-            @Override  
-            public void run() {  
-                for(int i=0;i<10;i++){
-                    title.add("标题");
-                    content.add("内容");
 
-                }
-                TAG_Knowledge=true;
-            }  
-        }).start();  
-    }
+    }*/
 
-    public void startDownLoad(){
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                for(int i=0;i<10;i++){
-                    page.add(""+i);
-                    url.add("http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%9B%BE%E7%89%87&step_word=&hs=0&pn=15&spn=0&di=122012152460&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=521468216%2C203255165&os=1228933433%2C1957590975&simid=4200592012%2C360737047&adpicid=0&lpn=0&ln=1992&fr=&fmq=1492013318359_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fv1.qzone.cc%2Fskin%2F201511%2F29%2F09%2F55%2F565a5b0d64410783.jpg!600x600.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bqz5gj_z%26e3BvvAzdH3FfhtgAzdH3Fhwp5g2AzdH3Fcmc8cd_z%26e3Bip4s&gsm=0&rpstart=0&rpnum=0");
-                }
-                TAG_Teacher=true;
-            }
-        }).start();
-    }
     /** 
      * 返回一个Binder对象 
      */  
@@ -109,6 +85,25 @@ public class MsgService extends Service {
         public MsgService getService(){  
             return MsgService.this;  
         }  
-    }  
-  
+    }
+    class getArticle implements Callable<Object> {
+        String url;
+
+        public getArticle(String url) {
+            this.url = url;
+        }
+
+        String getURL() throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        }
+        @Override
+        public Object call() throws Exception {
+            return getURL();
+        }
+    }
 }

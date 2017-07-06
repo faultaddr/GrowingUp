@@ -129,9 +129,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         mHeight = mBtnLogin.getMeasuredHeight();
         nameString=userId.getText().toString();
         psString=passWord.getText().toString();
-        inputAnimator(mInputLayout, mWidth, mHeight);
         mName.setVisibility(View.INVISIBLE);
         mPsw.setVisibility(View.INVISIBLE);
+        inputAnimator(mInputLayout, mWidth, mHeight);
+
+        //mInputLayout.setVisibility(View.INVISIBLE);
 
 
         Message message=new Message();
@@ -171,7 +173,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout,
                 "scaleX", 1f, 0.5f);
-        set.setDuration(1000);
+        set.setDuration(100);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();
@@ -190,13 +192,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                mInputLayout.setVisibility(View.INVISIBLE);
                 progress.setVisibility(View.VISIBLE);
+
                 try {
                     progressAnimator(progress);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                mInputLayout.setVisibility(View.INVISIBLE);
+
 
 
             }
@@ -255,9 +259,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         }
 
     };
-
-
-
 
 
 }

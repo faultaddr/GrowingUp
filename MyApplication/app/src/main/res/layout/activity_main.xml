@@ -196,6 +196,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textSize="10sp"
+            android:clickable="true"
             android:text="查看全部 >"
             />
         </RelativeLayout>

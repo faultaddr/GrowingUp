@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.example.panyunyi.growingup.Constant;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.R;
 
@@ -148,19 +149,23 @@ public class ThinkingActivity extends BaseActivity {
 
             WebView webView = (WebView) rootView.findViewById(R.id.thinking_activity_webview);
             //解决乱码问题
-            webView.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+            //webView.getSettings().setDefaultTextEncodingName("UTF-8");//设置默认为utf-8
             switch (count%4){
                 case 0:
-                    webView.loadData(getResources().getString(R.string.activity_thinking1), "text/html; charset=UTF-8",null);
+                    webView.loadUrl(Constant.API_URL+"/showThinkingActivity?num=1");
+                    //webView.loadData(getResources().getString(R.string.activity_thinking1), "text/html; charset=UTF-8",null);
                     break;
                 case 1:
-                    webView.loadData(getResources().getString(R.string.activity_thinking2), "text/html; charset=UTF-8",null);
+                    webView.loadUrl(Constant.API_URL+"/showThinkingActivity?num=2");
+                    //webView.loadData(getResources().getString(R.string.activity_thinking2), "text/html; charset=UTF-8",null);
                     break;
                 case 2:
-                    webView.loadData(getResources().getString(R.string.activity_thinking3), "text/html; charset=UTF-8",null);
+                    webView.loadUrl(Constant.API_URL+"/showThinkingActivity?num=3");
+                    //webView.loadData(getResources().getString(R.string.activity_thinking3), "text/html; charset=UTF-8",null);
                     break;
                 case 3:
-                    webView.loadData(getResources().getString(R.string.activity_thinking4), "text/html; charset=UTF-8",null);
+                    webView.loadUrl(Constant.API_URL+"/showThinkingActivity?num=4");
+                    //webView.loadData(getResources().getString(R.string.activity_thinking4), "text/html; charset=UTF-8",null);
                     break;
 
             }

@@ -4,6 +4,7 @@ package com.example.panyunyi.growingup.manager;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.example.panyunyi.growingup.Constant;
 import com.example.panyunyi.growingup.entity.remote.User;
 import com.example.panyunyi.growingup.entity.remote.UserInfo;
 import com.orhanobut.logger.Logger;
@@ -69,7 +70,7 @@ public class LoginImpl implements LoginManager {
 
         }
 
-        loginPost ct = new loginPost("http://fd0c2f10.ngrok.io/login", jsonObject.toString());//实例化任务对象
+        loginPost ct = new loginPost(Constant.API_URL+"/login", jsonObject.toString());//实例化任务对象
         //大家对Future对象如果陌生，说明你用带返回值的线程用的比较少，要多加练习
         Future<Object> future = exs.submit(ct);//使用线程池对象执行任务并获取返回对象
         try {
