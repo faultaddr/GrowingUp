@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
 import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.activity.AcceptActivity;
@@ -49,9 +50,13 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +64,11 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity {
 
@@ -108,7 +118,11 @@ public class MainActivity extends BaseActivity {
     float y2 = 0;
     boolean TAG_MOTION=false;
     private boolean TAG_DATA;
-
+    //网络请求相关
+    String result;
+    public static final MediaType JSONs
+            = MediaType.parse("application/json; charset=utf-8");
+    OkHttpClient client = new OkHttpClient();
     //轮播图片 URL 数组
 
     //int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
@@ -323,7 +337,7 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.thinking, R.id.inspire, R.id.accept,R.id.youth,R.id.expert,R.id.communist,R.id.mine})
+    @OnClick({R.id.thinking, R.id.inspire, R.id.accept,R.id.showAll,R.id.youth,R.id.expert,R.id.communist,R.id.mine})
     void butterknifeOnItemClick(View view){
         Intent intent=new Intent();
         switch (view.getId()){
@@ -355,6 +369,21 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 显示全部
                 * */
+                try {
+                    ExecutorService exs = Executors.newCachedThreadPool();
+                    Post p=new Post("http://fd0c2f10.ngrok.io/showArticle","aaa");
+                    Future<Object> future = exs.submit(p);//使用线程池对象执行任务并获取返回对象
+                    try {
+                        result = future.get().toString();//当调用了future的get方法获取返回的值得时候
+                        //如果线程没有计算完成，那么这里就会一直阻塞等待线程执行完成拿到返回值
+                        Log.i(">>>result",result);
+                        exs.shutdown();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case R.id.haveAChange:
                 /*
@@ -379,7 +408,7 @@ public class MainActivity extends BaseActivity {
                 * */
                 intent.setClass(this, PartyActivity.class);
                 startActivity(intent);
-                finish();
+                onPause();
                 break;
             case R.id.mine:
                 /*
@@ -430,5 +459,32 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override public String key() { return "square()"; }
+    }
+    class Post implements Callable{
+        String url;
+        String json;
+
+        public Post(String url, String json) {
+            this.url = url;
+
+            this.json = json;
+
+        }
+    String post() throws IOException {
+        RequestBody body =RequestBody.create(JSONs,json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Response response = client.newCall(request).execute();
+        Log.i(">>>", json);
+        String r=response.body().string();
+        return r;
+    }
+
+        @Override
+        public Object call() throws Exception {
+            return post();
+        }
     }
 }
