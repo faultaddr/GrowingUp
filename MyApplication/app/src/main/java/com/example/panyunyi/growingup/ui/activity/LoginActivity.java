@@ -131,10 +131,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         psString=passWord.getText().toString();
         mName.setVisibility(View.INVISIBLE);
         mPsw.setVisibility(View.INVISIBLE);
-        inputAnimator(mInputLayout, mWidth, mHeight);
-
-        //mInputLayout.setVisibility(View.INVISIBLE);
-
+        //inputAnimator(mInputLayout, mWidth, mHeight);
+        mInputLayout.setVisibility(View.INVISIBLE);
+        mBtnLogin.setVisibility(View.GONE);
+        progress.setVisibility(View.VISIBLE);
+        Log.i(">>>progress","initiate");
+        try {
+            progressAnimator(progress);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Message message=new Message();
         message.what=2;
@@ -173,7 +179,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout,
                 "scaleX", 1f, 0.5f);
-        set.setDuration(100);
+        set.setDuration(1000);
         set.setInterpolator(new AccelerateDecelerateInterpolator());
         set.playTogether(animator, animator2);
         set.start();
@@ -192,7 +198,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                mInputLayout.setVisibility(View.INVISIBLE);
+                mInputLayout.setVisibility(View.GONE);
                 progress.setVisibility(View.VISIBLE);
 
                 try {
@@ -215,6 +221,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     private void progressAnimator(final View view) throws InterruptedException {
+        Log.i(">>>progress","start");
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
                 0.5f, 1f);
         PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
@@ -233,24 +240,40 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     public android.os.Handler handler=new android.os.Handler()
     {
         @Override
-        public void handleMessage(Message msg)
+        public void handleMessage(final Message msg)
         {
+
             switch (msg.what){
+                case 1:
+                    Intent intent=new Intent();
+                    intent.setClass(getBaseContext(), MainActivity.class);
+
+                    startActivity(intent);
+                    finish();
+                    break;
                 case 2:
+                    Log.i(">>>progress","handler");
                     User user=new User();
                     user.userId=nameString;
                     user.userPassword=psString;
                     Log.i(">>>",nameString);
                     Log.i(">>>",psString);
-                    LoginImpl login=new LoginImpl(user);
-                    boolean result=login.login();
-                    Log.i(">>>result",result+"");
-                    if(result)
-                    {
-                        Intent intent=new Intent();
-                        intent.setClass(getBaseContext(), MainActivity.class);
-                        startActivity(intent);
-                    }
+                    final LoginImpl login=new LoginImpl(user);
+                    new Thread(){
+                        public void run(){
+
+                            boolean result=login.login();
+                            Log.i(">>>result",result+"");
+                            if(result)
+                            {
+                                Message message=new Message();
+                                message.what=1;
+                                handler.sendMessage(message);
+                            }
+                        }
+                    }.start();
+
+
                     break;
 
             }

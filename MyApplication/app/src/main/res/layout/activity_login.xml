@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7adfb8"
+    android:background="#888084"
     tools:context=".ui.activity.LoginActivity"
 
     >
@@ -21,12 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_title"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        >
 
         <ImageView
-            android:layout_width="55dip"
-            android:layout_height="55dip"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
+
             android:src="@mipmap/ic_launcher" />
 
         <TextView
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             android:gravity="center"
-            android:text="New Event"
+            android:text="中财心理疏导"
             android:textColor="#ffffff"
             android:textSize="24sp" />
 
@@ -42,7 +44,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="随时随地 想记就记"
+            android:text="给你一个看的见の未来"
             android:textColor="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>
@@ -63,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="130dip"
             layout="@layout/layout_progress"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/main_btn_login"

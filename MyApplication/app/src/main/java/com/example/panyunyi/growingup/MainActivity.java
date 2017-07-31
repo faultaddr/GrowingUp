@@ -136,6 +136,11 @@ public class MainActivity extends BaseActivity {
 
     //int []id=new int[]{R.drawable.main_activity_list_1, R.drawable.main_activity_list_2, R.drawable.main_activity_list_3, R.drawable.main_activity_list_4};
     ArrayList<ImageView>imageViews=new ArrayList<>();
+    public static List list=new ArrayList();
+
+    //adapter 声明
+    private KnowledgeNewsAdapter knowledgeNewsAdapter;
+
     public Handler mHandler = new Handler() {
 
 
@@ -158,6 +163,9 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 2:
                     viewPager.setAdapter(new MainViewPagerAdapter(mContext,imageViews));
+                    break;
+                case 3:
+                    knowledgeNewsAdapter.notifyDataSetChanged();
                     break;
             }
             super.handleMessage(msg);
@@ -283,8 +291,20 @@ public class MainActivity extends BaseActivity {
             }
         });
         teacherList.setAdapter(teacherListAdapter);*/
-        final KnowledgeNewsAdapter knowledgeNewsAdapte=new KnowledgeNewsAdapter(this,msgService.getKnowledge());
-        knowledgeNewsAdapte.setOnItemClickListener(new KnowledgeNewsAdapter.OnRecyclerViewItemClickListener() {
+        GArticleEntity g=new GArticleEntity();
+        g.setArticleContent("正在加载请稍后");
+        list.add(g);
+        knowledgeNewsAdapter = new KnowledgeNewsAdapter(this, list);
+        new Thread(){
+            public void run(){
+                list.clear();
+                list.addAll(msgService.getKnowledge());
+                Message msg=new Message();
+                msg.what=3;
+                mHandler.sendMessage(msg);
+            }
+        }.start();
+        knowledgeNewsAdapter.setOnItemClickListener(new KnowledgeNewsAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view,int pos) {
                 //TODO 这里是内建一个webview做查看 到时候还可以嵌入广告
@@ -307,7 +327,7 @@ public class MainActivity extends BaseActivity {
                 //TODO 这里是做预览
             }
         });
-        knowledgeNews.setAdapter(knowledgeNewsAdapte);
+        knowledgeNews.setAdapter(knowledgeNewsAdapter);
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
