@@ -11,6 +11,7 @@ import com.example.panyunyi.growingup.Constant;
 import com.example.panyunyi.growingup.entity.local.KnowledgeNewsList;
 import com.example.panyunyi.growingup.entity.local.TeacherList;
 import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
+import com.example.panyunyi.growingup.entity.remote.GTeacherEntity;
 import com.example.panyunyi.growingup.manager.LoginImpl;
 
 import org.json.JSONException;
@@ -39,7 +40,7 @@ public class MsgService extends Service {
     private List<TeacherList>teacherLists=new ArrayList<>();
 
 
-    OkHttpClient client = new OkHttpClient();
+    static OkHttpClient client = new OkHttpClient();
 
 
     public List<GArticleEntity> getKnowledge() {
@@ -47,7 +48,7 @@ public class MsgService extends Service {
         ExecutorService exs = Executors.newCachedThreadPool();
 
 
-        getArticle ct = new getArticle(Constant.API_URL+"/showArticle");//实例化任务对象
+        getMethod ct = new getMethod(Constant.API_URL+"/showArticle");//实例化任务对象
         //大家对Future对象如果陌生，说明你用带返回值的线程用的比较少，要多加练习
         Future<Object> future = exs.submit(ct);//使用线程池对象执行任务并获取返回对象
         List<GArticleEntity>list = null;
@@ -62,10 +63,26 @@ public class MsgService extends Service {
         }
         return list;
     }
-/*
-    public List<TeacherList>getTeacher(){
+    public List<GTeacherEntity> getTeacherInfo() {
 
-    }*/
+        ExecutorService exs = Executors.newCachedThreadPool();
+
+
+        getMethod ct = new getMethod(Constant.API_URL+"/showTeacher");//实例化任务对象
+        //大家对Future对象如果陌生，说明你用带返回值的线程用的比较少，要多加练习
+        Future<Object> future = exs.submit(ct);//使用线程池对象执行任务并获取返回对象
+        List<GTeacherEntity>list = null;
+        try {
+            String result=future.get().toString();
+            Log.i("result",result);
+            list= JSON.parseArray(result,GTeacherEntity.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     /** 
      * 返回一个Binder对象 
@@ -77,7 +94,7 @@ public class MsgService extends Service {
 
 
 
-    public class MsgBinder extends Binder{  
+    public class MsgBinder extends Binder{
         /** 
          * 获取当前Service的实例 
          * @return 
@@ -86,10 +103,10 @@ public class MsgService extends Service {
             return MsgService.this;  
         }  
     }
-    class getArticle implements Callable<Object> {
+   public static class getMethod implements Callable<Object> {
         String url;
 
-        public getArticle(String url) {
+        public getMethod(String url) {
             this.url = url;
         }
 

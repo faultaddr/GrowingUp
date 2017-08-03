@@ -3,11 +3,28 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="40dp"
     >
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="60dp"
-        android:layout_height="40dp" />
     <TextView
+        android:id="@+id/teacher_id"
+        android:layout_weight="1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:text="001"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/teacher_name"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="子毅老师"
+        android:gravity="center"
+        />
+    <TextView
+        android:id="@+id/teacher_major"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="心理疏导"
+        android:gravity="center"
+        />
 </LinearLayout>

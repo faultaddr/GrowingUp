@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.local.KnowledgeNewsList;
 import com.example.panyunyi.growingup.entity.local.TeacherList;
+import com.example.panyunyi.growingup.entity.remote.GTeacherEntity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,14 +23,14 @@ import java.util.List;
  * MailBox cufer@foxmail.com
  */
 
-public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnClickListener, View.OnLongClickListener{
+public class TeacherListAdapter extends RecyclerView.Adapter{
     private Context mContext;
-    private List<TeacherList> datas;//数据
+    private List<GTeacherEntity> datas;//数据
 
     //自定义监听事件
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view);
-        void onItemLongClick(View view);
+        void onItemClick(View view,int pos);
+        void onItemLongClick(View view,int pos);
     }
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -37,42 +38,42 @@ public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnC
     }
 
     //适配器初始化
-    public TeacherListAdapter(Context context,List<TeacherList> datas) {
+    public TeacherListAdapter(Context context,List<GTeacherEntity> datas) {
         mContext=context;
         this.datas=datas;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        //判断item类别，是图还是显示页数（图片有URL）
-        if (!TextUtils.isEmpty(datas.get(position).getUrl())) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        //根据item类别加载不同ViewHolder
-        if(viewType==0){
+
             View view = LayoutInflater.from(mContext
             ).inflate(R.layout.main_activity_teacher_list_item, parent,
                     false);//这个布局就是一个imageview用来显示图片
-            MyViewHolder holder = new MyViewHolder(view);
+            final MyViewHolder holder = new MyViewHolder(view);
 
-            //给布局设置点击和长点击监听
-            view.setOnClickListener(this);
-            view.setOnLongClickListener(this);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick(v, holder.getAdapterPosition());
+                }
+            }
+        });
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemLongClick(v, holder.getAdapterPosition());
+                }
+                return false;
+            }
+        });
 
             return holder;
-        }else{
-            MyViewHolder2 holder2=new MyViewHolder2(LayoutInflater.from(
-                    mContext).inflate(R.layout.page_item, parent,
-                    false));//这个布局就是一个textview用来显示页数
-            return holder2;
-        }
+
 
     }
 
@@ -81,9 +82,10 @@ public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnC
         //将数据与item视图进行绑定，如果是MyViewHolder就加载网络图片，如果是MyViewHolder2就显示页数
         if(holder instanceof MyViewHolder){
             //Picasso.with(mContext).load(datas.get(position).getUrl()).into(((MyViewHolder) holder).iv);//加载网络图片
-            ((MyViewHolder) holder).iv.setImageResource(R.mipmap.ic_launcher);
-        }else if(holder instanceof MyViewHolder2){
-            ((MyViewHolder2) holder).tv.setText(datas.get(position).getPage()+"页");
+            ((MyViewHolder) holder).teacherId.setText(datas.get(position).getTeacherId());
+            ((MyViewHolder)holder).teacherName.setText(datas.get(position).getTeacherName());
+            ((MyViewHolder)holder).teacherMajor.setText(datas.get(position).getTeacherMajor());
+
         }
 
     }
@@ -94,41 +96,21 @@ public class TeacherListAdapter extends RecyclerView.Adapter implements View.OnC
         return datas.size();//获取数据的个数
     }
 
-    //点击事件回调
-    @Override
-    public void onClick(View v) {
-        if (mOnItemClickListener != null) {
-            mOnItemClickListener.onItemClick(v);
-        }
-    }
-    @Override
-    public boolean onLongClick(View v) {
-        if (mOnItemClickListener!= null) {
-            mOnItemClickListener.onItemLongClick(v);
-        }
-        return false;
-    }
+
 
     //自定义ViewHolder，用于加载图片
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        private ImageView iv;
+        private TextView teacherId;
+        private TextView teacherName;
+        private TextView teacherMajor;
 
         public MyViewHolder(View view)
         {
             super(view);
-            iv = (ImageView) view.findViewById(R.id.iv);
-        }
-    }
-    //自定义ViewHolder，用于显示页数
-    class MyViewHolder2 extends RecyclerView.ViewHolder
-    {
-        private TextView tv;
-
-        public MyViewHolder2(View view)
-        {
-            super(view);
-            tv = (TextView) view.findViewById(R.id.tv);
+            teacherId=(TextView)view.findViewById(R.id.teacher_id);
+            teacherName=(TextView)view.findViewById(R.id.teacher_name);
+            teacherMajor=(TextView)view.findViewById(R.id.teacher_major);
         }
     }
 
