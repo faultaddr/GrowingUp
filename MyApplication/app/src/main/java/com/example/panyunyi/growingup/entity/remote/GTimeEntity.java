@@ -1,6 +1,8 @@
 package com.example.panyunyi.growingup.entity.remote;
 
-public class GTimeEntity {
+import java.io.Serializable;
+
+public class GTimeEntity implements Serializable {
     private String teacherId;
     private String timeDetail;
     private int id;

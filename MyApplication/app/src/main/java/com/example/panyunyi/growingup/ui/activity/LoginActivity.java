@@ -7,7 +7,6 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -24,15 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.example.panyunyi.growingup.MainActivity;
+import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.remote.User;
 import com.example.panyunyi.growingup.manager.LoginImpl;
-import com.example.panyunyi.growingup.util.ACache;
-import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.ui.custom.JellyInterpolator;
-import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -40,35 +36,65 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
+    private static int TAG = 2;
+    private final Lock lock = new ReentrantLock();
     //TODO-LIST: 增加注册页面
     private TextView mBtnLogin;
-
     private View progress;
-
     private View mInputLayout;
-
     private float mWidth, mHeight;
-
     private LinearLayout mName, mPsw;
-
     private EditText userId;
-
     private EditText passWord;
-
     private TextView signUp;
-
     private RelativeLayout mainToAll;
-
     private ImageView backButton;
-
-    private final Lock lock = new ReentrantLock();
-
     private Condition notComplete = lock.newCondition();
-    private Condition notEmpty = lock.newCondition() ;
+    private Condition notEmpty = lock.newCondition();
+    private String nameString, psString;
+    public android.os.Handler handler = new android.os.Handler() {
+        @Override
+        public void handleMessage(final Message msg) {
 
-    private String nameString,psString;
+            switch (msg.what) {
+                case 1:
+                    Intent intent = new Intent();
+                    intent.setClass(getBaseContext(), MainActivity.class);
 
-    private static int TAG=2;
+                    startActivity(intent);
+                    finish();
+                    break;
+                case 2:
+                    Log.i(">>>progress", "handler");
+                    User user = new User();
+                    user.userId = nameString;
+                    user.userPassword = psString;
+                    Log.i(">>>", nameString);
+                    Log.i(">>>", psString);
+                    final LoginImpl login = new LoginImpl(user);
+                    new Thread() {
+                        public void run() {
+
+                            boolean result = login.login();
+                            Log.i(">>>result", result + "");
+                            if (result) {
+                                Message message = new Message();
+                                message.what = 1;
+                                handler.sendMessage(message);
+                            }
+                        }
+                    }.start();
+
+
+                    break;
+
+            }
+
+            super.handleMessage(msg);
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,58 +132,64 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
     private void initView() {
         mBtnLogin = (TextView) findViewById(R.id.main_btn_login);
-        signUp=(TextView)findViewById(R.id.signup);
+        signUp = (TextView) findViewById(R.id.signup);
         progress = findViewById(R.id.layout_progress);
         mInputLayout = findViewById(R.id.input_layout);
-        backButton=(ImageView)findViewById(R.id.back);
+        backButton = (ImageView) findViewById(R.id.back);
         backButton.setVisibility(View.INVISIBLE);
         mName = (LinearLayout) findViewById(R.id.input_layout_name);
         mPsw = (LinearLayout) findViewById(R.id.input_layout_psw);
-        userId=(EditText) findViewById(R.id.userId);
-        passWord=(EditText)findViewById(R.id.passWord);
-        mainToAll=(RelativeLayout)findViewById(R.id.mainToAll);
+        userId = (EditText) findViewById(R.id.userId);
+        passWord = (EditText) findViewById(R.id.passWord);
+        mainToAll = (RelativeLayout) findViewById(R.id.mainToAll);
         mBtnLogin.setOnClickListener(this);
-
+        signUp.setOnClickListener(this);
 
 
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_btn_login:
+                mWidth = mBtnLogin.getMeasuredWidth();
+                mHeight = mBtnLogin.getMeasuredHeight();
+                nameString = userId.getText().toString();
+                psString = passWord.getText().toString();
+                mName.setVisibility(View.INVISIBLE);
+                mPsw.setVisibility(View.INVISIBLE);
+                //inputAnimator(mInputLayout, mWidth, mHeight);
+                mInputLayout.setVisibility(View.INVISIBLE);
+                mBtnLogin.setVisibility(View.GONE);
+                progress.setVisibility(View.VISIBLE);
+                Log.i(">>>progress", "initiate");
+                try {
+                    progressAnimator(progress);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
-        mWidth = mBtnLogin.getMeasuredWidth();
-        mHeight = mBtnLogin.getMeasuredHeight();
-        nameString=userId.getText().toString();
-        psString=passWord.getText().toString();
-        mName.setVisibility(View.INVISIBLE);
-        mPsw.setVisibility(View.INVISIBLE);
-        //inputAnimator(mInputLayout, mWidth, mHeight);
-        mInputLayout.setVisibility(View.INVISIBLE);
-        mBtnLogin.setVisibility(View.GONE);
-        progress.setVisibility(View.VISIBLE);
-        Log.i(">>>progress","initiate");
-        try {
-            progressAnimator(progress);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                Message message = new Message();
+                message.what = 2;
+                handler.sendMessage(message);
+                break;
+            case R.id.signup:
+                Intent intent=new Intent(this,RegisterActivity.class);
+                startActivity(intent);
+                break;
         }
-
-        Message message=new Message();
-        message.what=2;
-        handler.sendMessage(message);
     }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 
-
-            Log.i("daole","fsdafs");
-            nameString=data.getStringExtra("userId");
-            psString=data.getStringExtra("passWord");
-
+        Log.i("daole", "fsdafs");
+        nameString = data.getStringExtra("userId");
+        psString = data.getStringExtra("passWord");
 
 
-        }
+    }
 
     private void inputAnimator(final View view, float w, float h) {
 
@@ -208,7 +240,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 }
 
 
-
             }
 
             @Override
@@ -221,7 +252,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     private void progressAnimator(final View view) throws InterruptedException {
-        Log.i(">>>progress","start");
+        Log.i(">>>progress", "start");
         PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
                 0.5f, 1f);
         PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
@@ -233,55 +264,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         animator3.start();
 
 
-
-
-
     }
-    public android.os.Handler handler=new android.os.Handler()
-    {
-        @Override
-        public void handleMessage(final Message msg)
-        {
-
-            switch (msg.what){
-                case 1:
-                    Intent intent=new Intent();
-                    intent.setClass(getBaseContext(), MainActivity.class);
-
-                    startActivity(intent);
-                    finish();
-                    break;
-                case 2:
-                    Log.i(">>>progress","handler");
-                    User user=new User();
-                    user.userId=nameString;
-                    user.userPassword=psString;
-                    Log.i(">>>",nameString);
-                    Log.i(">>>",psString);
-                    final LoginImpl login=new LoginImpl(user);
-                    new Thread(){
-                        public void run(){
-
-                            boolean result=login.login();
-                            Log.i(">>>result",result+"");
-                            if(result)
-                            {
-                                Message message=new Message();
-                                message.what=1;
-                                handler.sendMessage(message);
-                            }
-                        }
-                    }.start();
-
-
-                    break;
-
-            }
-
-            super.handleMessage(msg);
-        }
-
-    };
 
 
 }

@@ -123,4 +123,32 @@ public class MsgService extends Service {
             return getURL();
         }
     }
+    public static class Post implements Callable {
+        String url;
+        String json;
+
+        public Post(String url, String json) {
+            this.url = url;
+
+            this.json = json;
+
+        }
+
+        String post() throws IOException {
+            RequestBody body = RequestBody.create(JSONs, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            Log.i(">>>", json);
+            String r = response.body().string();
+            return r;
+        }
+
+        @Override
+        public Object call() throws Exception {
+            return post();
+        }
+    }
 }

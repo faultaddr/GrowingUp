@@ -123,7 +123,7 @@ public class MainActivity extends BaseActivity {
     ArrayList<ImageView> imageViews = new ArrayList<>();
     //轮播图片 URL 数组
     private Context mContext;
-    private MsgService msgService = new MsgService();
+    private MsgService msgService=new MsgService();
     ServiceConnection conn = new ServiceConnection() {
 
         @Override
@@ -209,7 +209,7 @@ public class MainActivity extends BaseActivity {
         Logger.clearLogAdapters();
 
 
-        Log.i(">>>login", LoginSession.getLoginSession().getLoginedUser().getUserId() + "");
+        //Log.i(">>>login", LoginSession.getLoginSession().getLoginedUser().getUserId() + "");
         mContext = this;
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -245,11 +245,11 @@ public class MainActivity extends BaseActivity {
                     options.inJustDecodeBounds = false;
                     options.inSampleSize = 10; //width，hight设为原来的十分之一
                     Bitmap btp = BitmapFactory.decodeStream(is, null, options);*/
-            String urlList[] = new String[]{"http://i4.piimg.com/598503/1a04f984809c7f6f.png", "http://i4.piimg.com/598503/b739722c397b4d71.jpg", "http://i4.piimg.com/598503/c32b15e59da031b8.jpg", "http://i4.piimg.com/598503/fbe9565586aa5fed.jpg"};
+            String urlList[] = new String[]{"http://i2.bvimg.com/598503/4c60dfb9171f5576.jpg", "http://i2.bvimg.com/598503/1d8d270306c1f3a7.jpg", "http://i2.bvimg.com/598503/050850a730e449ff.jpg", "http://i2.bvimg.com/598503/e4fb964755e5df12.jpg"};
             ImageView imageView = new ImageView(MainActivity.this);
 /*                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                     imageView.setImageBitmap(btp);*/
-            Picasso.with(this).load(urlList[i]).resize(getWindow().getDecorView().getWidth(), 100)
+            Picasso.with(this).load(urlList[i]).resize(getWindow().getDecorView().getWidth(), 200)
                     .into(imageView);
             //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageViews.add(imageView);

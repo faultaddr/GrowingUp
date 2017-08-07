@@ -7,6 +7,7 @@ package com.example.panyunyi.growingup.entity.remote;
  */
 
 public class UserInfo{
+    public UserInfo(){}
     public String getUserName() {
         return userName;
     }
@@ -98,4 +99,75 @@ public class UserInfo{
     private String userInstitution;
     private String userRole;
 
+
+
+    public static class UserBuilder{
+        private String userName;
+        private String userPassword;
+        private String userId;
+        private String userWechat;
+        private String userAlipay;
+        private String userTelephoneNumber;
+        private String userGrade;
+        private String userClass;
+        private String userInstitution;
+        private String userRole;
+
+        public UserBuilder userName(String name){
+            userName=name;
+            return this;
+        }
+        public UserBuilder userId(String sId){
+            userId=sId;
+            return this;
+        }
+        public UserBuilder userWechat(String weChat){
+            userWechat=weChat;
+            return this;
+        }
+        public UserBuilder userClass(String sClass){
+            userClass=sClass;
+            return this;
+        }
+        public UserBuilder userPhone(String phone){
+            userTelephoneNumber=phone;
+            return this;
+        }
+        public UserBuilder userInstitute(String institute){
+            userInstitution=institute;
+            return this;
+        }
+        public UserBuilder userGrade(String grade){
+            userGrade=grade;
+            return this;
+        }
+        public UserBuilder userPassword(String Password){
+            userPassword=Password;
+            return this;
+        }
+        public UserBuilder userAliPay(String aliPay){
+            userAlipay=aliPay;
+            return this;
+        }
+        public UserBuilder userRole(String role){
+            userRole=role;
+            return this;
+        }
+        public UserInfo build(){
+            return new UserInfo(this);
+        }
+    }
+
+    private UserInfo(UserBuilder builder){
+        userId=builder.userId;
+        userName=builder.userName;
+        userAlipay=builder.userAlipay;
+        userClass=builder.userClass;
+        userGrade=builder.userGrade;
+        userInstitution=builder.userInstitution;
+        userPassword=builder.userPassword;
+        userTelephoneNumber=builder.userTelephoneNumber;
+        userWechat=builder.userWechat;
+        userRole=builder.userRole;
+    }
 }

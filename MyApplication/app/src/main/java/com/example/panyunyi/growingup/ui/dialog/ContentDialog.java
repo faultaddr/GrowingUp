@@ -14,7 +14,7 @@ import com.example.panyunyi.growingup.ui.fragment.BlankFragment;
 import java.util.zip.Inflater;
 
 /**
- * Created by panyu on 2017/6/22.
+ * Created by panyunyi on 2017/6/22.
  */
 
 public class ContentDialog extends android.support.v4.app.DialogFragment {

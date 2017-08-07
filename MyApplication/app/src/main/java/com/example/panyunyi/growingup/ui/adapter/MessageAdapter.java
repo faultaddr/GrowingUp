@@ -46,9 +46,11 @@ public class MessageAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.i("message->position->",position+"");
         if(holder instanceof MyViewHolder){
-            if(Integer.parseInt(status)!=position)
-                ((MyViewHolder)holder).dotView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.timelline_dot_normal));
-
+            if(Integer.parseInt(status)!=position) {
+                ((MyViewHolder) holder).dotView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.timelline_dot_normal));
+            }else{
+                ((MyViewHolder) holder).dotView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.timelline_dot_first));
+            }
             ((MyViewHolder)holder).statusView.setText(statusContent[position]);
             ((MyViewHolder)holder).timeView.setText(timeList.get(position));
             DisplayMetrics dm = mContext.getResources().getDisplayMetrics();
