@@ -1,6 +1,7 @@
 package com.example.panyunyi.growingup.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -58,7 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
     String sClass;
     @BindView(R.id.activity_register_register)
     Button register;
-
+    @BindView(R.id.container)
+    CoordinatorLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +113,11 @@ public class RegisterActivity extends AppCompatActivity {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
-                    if(result.equals(true)){
-                        Toast.makeText(getApplication(),"注册成功小宝贝",Toast.LENGTH_LONG).show();
+                    if(result.equals("true")){
+                        Snackbar.make(container,"提交成功",Snackbar.LENGTH_LONG).show();
 
                     }else{
-                        Toast.makeText(getApplication(),"注册失败请检查网络或必填项",Toast.LENGTH_LONG).show();
+                        Snackbar.make(container,"提交失败请检查网络或必填项",Snackbar.LENGTH_LONG).show();
                     }
                 }
 

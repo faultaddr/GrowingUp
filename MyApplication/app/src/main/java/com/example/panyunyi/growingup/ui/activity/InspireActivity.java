@@ -1,5 +1,7 @@
 package com.example.panyunyi.growingup.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -37,6 +39,9 @@ public class InspireActivity extends BaseActivity {
             @Override
             public void onItemClick(View view) {
                 //TODO 这里需要访问后端实现 内容的web端添加
+                String url = "mqqwpa://im/chat?chat_type=group&uin=652024893&version=1";//这是调到指定的qq群
+                //String url="mqqwpa://im/chat?chat_type=wpa&uin=779087031";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
             }
 
             @Override

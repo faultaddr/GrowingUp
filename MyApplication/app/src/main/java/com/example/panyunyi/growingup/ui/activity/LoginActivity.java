@@ -27,6 +27,7 @@ import com.example.panyunyi.growingup.MainActivity;
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.remote.User;
 import com.example.panyunyi.growingup.manager.LoginImpl;
+import com.example.panyunyi.growingup.ui.adapter.InspireAdapter;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.ui.custom.JellyInterpolator;
 
@@ -81,6 +82,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                                 Message message = new Message();
                                 message.what = 1;
                                 handler.sendMessage(message);
+                            }else{
+                                Intent intentRaw=new Intent(LoginActivity.this,LoginActivity.class);
+                                startActivity(intentRaw);
+                                finish();
                             }
                         }
                     }.start();

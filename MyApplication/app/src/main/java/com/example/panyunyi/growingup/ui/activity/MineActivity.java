@@ -27,10 +27,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.panyunyi.growingup.manager.LoginSession;
+import com.example.panyunyi.growingup.manager.OrderInfoSession;
 import com.example.panyunyi.growingup.ui.base.BaseActivity;
 import com.example.panyunyi.growingup.R;
+import com.example.panyunyi.growingup.util.ACache;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -104,8 +107,11 @@ public class MineActivity extends BaseActivity {
                 /*
                 * 消息
                 * */
+                if(OrderInfoSession.getOrderInfoSession().getOrderedSession()==null&& ACache.get(getApplicationContext(),"session").getAsObject("sessionDetail")==null){
+                    Toast.makeText(getApplication(), "暂无相关预定", Toast.LENGTH_LONG).show();
+                }else{
                 intent.setClass(this,MessageActivity.class);
-                startActivity(intent);
+                startActivity(intent);}
                 break;
             case R.id.mine_activity_setting:
                 /*

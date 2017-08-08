@@ -9,7 +9,7 @@ import com.example.panyunyi.growingup.entity.remote.UserInfo;
 
 public class OrderInfoSession {
     static OrderInfoSession orderInfoSession =null;
-    private GTimeEntity gTimeEntity;
+    private GTimeEntity gTimeEntity=null;
     private OrderInfoSession(){}
     public static OrderInfoSession getOrderInfoSession(){
         if(orderInfoSession==null){

@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.example.panyunyi.growingup.Constant;
 import com.example.panyunyi.growingup.R;
 import com.example.panyunyi.growingup.entity.remote.GTimeEntity;
+import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.manager.OrderImpl;
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.adapter.TimeSpinnerAdapter;
@@ -39,6 +42,11 @@ public class OrderActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(LoginSession.getLoginSession().getLoginedUser().getUserId().equals("")){
+            Toast.makeText(getApplication(),"请先登录",Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         setContentView(R.layout.activity_order);
         ButterKnife.bind(this);
 
