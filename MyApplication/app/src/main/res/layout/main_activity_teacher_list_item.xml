@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="001"
+        android:textColor="#ffffff"
         android:gravity="center"
         />
     <TextView
@@ -17,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="子毅老师"
+        android:textColor="#ffffff"
         android:gravity="center"
         />
     <TextView
@@ -25,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="心理疏导"
+        android:textColor="#ffffff"
         android:gravity="center"
         />
 </LinearLayout>

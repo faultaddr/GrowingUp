@@ -7,6 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.panyunyi.growingup.ui.activity.InspireActivity"
     tools:showIn="@layout/activity_inspire"
+
     >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/inspire_main"

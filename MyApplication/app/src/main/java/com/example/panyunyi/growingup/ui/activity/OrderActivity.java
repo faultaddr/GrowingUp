@@ -37,15 +37,13 @@ public class OrderActivity extends BaseActivity {
     @BindView(R.id.send_order)
     ImageView sendOrder;
     ArrayList<GTimeEntity> list = null;
+    ArrayList<GTimeEntity>listOrdered=new ArrayList<>();
     private String teacherId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(LoginSession.getLoginSession().getLoginedUser().getUserId().equals("")){
-            Toast.makeText(getApplication(),"请先登录",Toast.LENGTH_LONG).show();
-            finish();
-        }
+
 
         setContentView(R.layout.activity_order);
         ButterKnife.bind(this);
@@ -60,7 +58,8 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void initView() {
-        timeSpinner.setAdapter(new TimeSpinnerAdapter(OrderActivity.this, list));
+        orderList();
+        timeSpinner.setAdapter(new TimeSpinnerAdapter(OrderActivity.this, listOrdered));
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -87,6 +86,13 @@ public class OrderActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void orderList() {
+        for(GTimeEntity listItem:list){
+            Log.i(">>>",listItem.getTimeStatus());
+            if(listItem.getTimeStatus().equals("-1")||listItem.getTimeStatus().equals("0"))listOrdered.add(listItem);
+        }
     }
 
     private boolean initData(@Nullable String url) {

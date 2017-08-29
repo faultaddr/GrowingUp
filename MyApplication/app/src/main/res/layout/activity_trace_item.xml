@@ -15,7 +15,7 @@
             android:layout_width="0.5dp"
             android:layout_height="12dp"
             android:layout_centerHorizontal="true"
-            android:background="#999" />
+            android:background="#ffffff" />
 
         <TextView
             android:id="@+id/tvDot"
@@ -30,7 +30,7 @@
             android:layout_height="0.5dp"
             android:layout_below="@id/tvDot"
             android:layout_centerHorizontal="true"
-            android:background="#999" />
+            android:background="#ffffff" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2014/06/24 20:55:28"
-            android:textColor="#999"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
             android:textSize="10sp" />
 
         <TextView
@@ -55,8 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tvAcceptTime"
             android:layout_marginTop="5dp"
+            android:paddingTop="8dp"
+            android:layout_alignLeft="@id/tvAcceptTime"
             android:text="提出申请"
-            android:textColor="#999"
+            android:textColor="#ffffff"
             android:textSize="12sp" />
     </RelativeLayout>
 </LinearLayout>

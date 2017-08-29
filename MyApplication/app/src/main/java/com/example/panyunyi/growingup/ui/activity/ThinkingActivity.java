@@ -24,6 +24,7 @@ import com.example.panyunyi.growingup.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class ThinkingActivity extends BaseActivity {
@@ -64,7 +65,13 @@ public class ThinkingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thinking);
         ButterKnife.bind(this);
-        textViewOfOne.setBackgroundColor(Color.parseColor("#ffff00"));
+
+
+
+
+
+
+        textViewOfOne.setBackgroundColor(Color.parseColor("#808080"));
         view = new TextView[]{textViewOfOne, textViewOfTwo, textViewOfThree, textViewOfFour};
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -84,9 +91,11 @@ public class ThinkingActivity extends BaseActivity {
                 pos=position;
                 for (int i = 0; i < 4; i++) {
                     if (position != i) {
-                        view[i].setBackgroundColor(Color.parseColor("#fffff0"));
+                        view[i].setBackgroundColor(Color.parseColor("#302833"));
+                        view[i].setTextColor(Color.parseColor("#ffffff"));
                     } else {
-                        view[i].setBackgroundColor(Color.parseColor("#ffff00"));
+                        view[i].setBackgroundColor(Color.parseColor("#808080"));
+                        view[i].setTextColor(Color.parseColor("#ee7800"));
 
                     }
 
@@ -210,6 +219,24 @@ public class ThinkingActivity extends BaseActivity {
                     return "SECTION 4";
             }
             return null;
+        }
+        }
+    @OnClick({R.id.text1,R.id.text2,R.id.text3,R.id.text4})
+    void clickTitle(View v){
+        switch (v.getId()){
+            case R.id.text1:
+                mViewPager.setCurrentItem(0);
+                break;
+            case R.id.text2:
+                mViewPager.setCurrentItem(1);
+                break;
+            case R.id.text3:
+                mViewPager.setCurrentItem(2);
+                break;
+            case R.id.text4:
+                mViewPager.setCurrentItem(3);
+                break;
+
         }
     }
 }

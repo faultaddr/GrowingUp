@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="思想阵地"
+        android:textColor="#ffffff"
         android:background="@drawable/baseline"
 
         />
@@ -36,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="心灵港湾"
+        android:textColor="#ffffff"
         android:background="@drawable/baseline"
         />
     <TextView
@@ -45,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="为人处世"
+        android:textColor="#ffffff"
         android:background="@drawable/baseline"
         />
     <TextView
@@ -54,6 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="说话办文"
+        android:textColor="#ffffff"
         android:background="@drawable/baseline"
         />
 </LinearLayout>

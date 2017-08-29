@@ -60,8 +60,8 @@ public class MineActivity extends BaseActivity {
     RelativeLayout accountLayout;
     @BindView(R.id.mine_activity_message)
     RelativeLayout messageLayout;
-    @BindView(R.id.mine_activity_setting)
-    RelativeLayout settingLayout;
+/*    @BindView(R.id.mine_activity_setting)
+    RelativeLayout settingLayout;*/
     @BindView(R.id.mine_activity_recommend)
     RelativeLayout recommendLayout;
     @BindView(R.id.mine_activity_rmb)
@@ -85,7 +85,8 @@ public class MineActivity extends BaseActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @OnClick({R.id.mine_activity_medal, R.id.mine_activity_account, R.id.mine_activity_message, R.id.mine_activity_setting, R.id.mine_activity_recommend, R.id.mine_activity_rmb,R.id.exit_button})
+    @OnClick({R.id.mine_activity_medal, R.id.mine_activity_account, R.id.mine_activity_message, //R.id.mine_activity_setting,
+             R.id.mine_activity_recommend, R.id.mine_activity_rmb,R.id.exit_button})
     void butterknifeOnItemClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -113,15 +114,15 @@ public class MineActivity extends BaseActivity {
                 intent.setClass(this,MessageActivity.class);
                 startActivity(intent);}
                 break;
-            case R.id.mine_activity_setting:
-                /*
+            /*case R.id.mine_activity_setting:
+                *//*
                 * 设置
-                */
+                *//*
 
                 Snackbar.make(view, "no setting now", Snackbar.LENGTH_SHORT)
                         .setAction("ok", null)
                         .show();
-                break;
+                break;*/
             case R.id.mine_activity_recommend:
                 /*
                 * 推荐

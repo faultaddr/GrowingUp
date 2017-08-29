@@ -1,41 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.panyunyi.growingup.MainActivity"
     android:orientation="vertical"
-    android:id="@+id/main"
+    android:background="@color/gray"
     app:layout_heightPercent="100%"
-    >
+    tools:context="com.example.panyunyi.growingup.MainActivity">
+
     <RelativeLayout
         android:id="@+id/find"
-
-        app:layout_heightPercent="6%"
+        android:background="@color/gray"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        app:layout_heightPercent="6%"
 
-        >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
         <ImageView
             android:id="@+id/search"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:src="@drawable/accept_activity_search"
-            />
-<TextView
-    android:layout_gravity="center"
-    android:layout_marginLeft="16dp"
-    android:layout_centerInParent="true"
-    android:gravity="center"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="发现"
-    android:textSize="20dp"
-    android:layout_marginRight="16dp"
+            android:layout_height="wrap_content"
+            android:background="@color/orange"
+            android:src="@drawable/accept_activity_search" />
 
-    />
+        <EditText
+            android:id="@+id/title_find"
+            android:background="@color/orange"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="发现"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:focusable="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -46,250 +53,272 @@
 
 
     </View>
+
     <ScrollView
-        android:layout_marginTop="8dp"
-        app:layout_heightPercent="84%"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/find"
-
-        >
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        >
-
-
-    </android.support.v4.view.ViewPager>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
         android:layout_marginTop="8dp"
-        android:weightSum="3"
+        app:layout_heightPercent="84%"
+
         >
 
         <LinearLayout
-            android:id="@+id/thinking"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="5"
-            android:layout_marginBottom="4dp"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.9"
-                android:src="@drawable/main_activity_thinking"
-                />
-            <TextView
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.1"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:text="@string/thinking"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/inspire"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="5"
-            android:layout_marginBottom="4dp"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.9"
-                android:src="@drawable/main_activity_inspiration"
-                />
-            <TextView
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.1"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:text="@string/inspiration"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/accept"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="5"
-            android:layout_marginBottom="4dp"
-            >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.9"
-                android:src="@drawable/main_activity_accept"
-                />
-            <TextView
-                android:layout_marginTop="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3.1"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:text="@string/accept"
-                />
-
-        </LinearLayout>
-    </LinearLayout>
-        <View
             android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="#fffff0"
-            />
-    <ImageView
-        android:id="@+id/main_picture"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:src="@drawable/main_picture"
-        android:scaleType="fitXY"
-        android:layout_height="160dp" />
-    <RelativeLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:layout_marginLeft="8dp"
-        >
-
-
-
-        <RelativeLayout
-            android:id="@+id/knowledge_news"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-        <TextView
-            android:text="知识新闻|免费"
-            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:textStyle="bold"
-            android:textSize="12sp"
-            android:layout_alignParentLeft="true"
-            />
-        <TextView
-            android:id="@+id/showAll"
-            android:layout_alignParentRight="true"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="10sp"
-            android:clickable="true"
-            android:text="查看全部 >"
-            />
-        </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/knowlwdge_news_list"
-            android:layout_below="@id/knowledge_news"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:orientation="vertical">
 
-    </RelativeLayout>
-        <RelativeLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            >
-            <RelativeLayout
-                android:id="@+id/teachers"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
-                <TextView
-                    android:text="辅导老师|预约"
-                    android:layout_width="100dp"
+                android:layout_height="200dp">
+
+
+            </android.support.v4.view.ViewPager>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/orange"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/thinking"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
-                    android:layout_alignParentLeft="true"
-                    />
-                <TextView
-                    android:id="@+id/haveAChange"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="50dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.9"
+                        android:src="@drawable/main_activity_thinking" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="3.1"
+                        android:gravity="center"
+                        android:text="@string/thinking"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/inspire"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="right|center_vertical"
-                    android:textSize="10sp"
-                    android:text="换一换↔"
-                    />
-            </RelativeLayout>
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.9"
+                        android:src="@drawable/main_activity_inspiration" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="3.1"
+                        android:gravity="center"
+                        android:text="@string/inspiration"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.9"
+                        android:src="@drawable/main_activity_accept" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="3.1"
+                        android:gravity="center"
+                        android:text="@string/accept"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <ImageView
+                android:id="@+id/main_picture"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_margin="8dp"
+                android:scaleType="fitXY"
+                android:focusable="true"
+                android:src="@drawable/main_picture" />
+
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/teachers"
-                >
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/teachers_list"
 
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/main_activity_play"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    />
+                android:layout_height="168dp"
+                android:layout_marginLeft="8dp">
+
+
+                <RelativeLayout
+                    android:id="@+id/knowledge_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/gray"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:text="知识新闻"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/showAll"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:text="查看全部 >"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/knowlwdge_news_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/knowledge_news" />
 
             </RelativeLayout>
-        </RelativeLayout>
 
-    </LinearLayout>
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/teachers"
+                    android:layout_width="match_parent"
+                    android:background="@color/gray"
+                    android:layout_height="30dp">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginTop="4dp"
+                        android:text="辅导老师|点击老师进行预约"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/haveAChange"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:textColor="#ffffff"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right|center_vertical"
+                        android:text=""
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/teachers">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/teachers_list"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/main_activity_play" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
 
 
     </ScrollView>
+
     <LinearLayout
-        app:layout_heightPercent="9%"
-        android:layout_below="@id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/orange"
         android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
         android:weightSum="4"
 
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        >
+        app:layout_heightPercent="9%">
+
         <LinearLayout
             android:id="@+id/youth"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="5"
 
             >
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1.5"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/main_activity_youth"
-                />
+                android:layout_weight="1.5"
+                android:src="@drawable/main_activity_youth" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -299,88 +328,94 @@
                 android:layout_weight="3.5"
                 android:gravity="center"
                 android:text="@string/youth"
+                android:textColor="#ffffff"
                 android:textSize="10sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/expert"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="5"
-            >
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1.5"
                 android:layout_marginBottom="4dp"
+                android:layout_weight="1.5"
                 android:src="@drawable/main_activity_expert" />
 
             <TextView
-                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:layout_weight="3.5"
-                android:textSize="10sp"
                 android:gravity="center"
                 android:text="@string/expert"
-                />
+                android:textColor="#ffffff"
+                android:textSize="10sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/communist"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="5"
 
             >
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1.5"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/main_activity_communist"
-                />
+                android:layout_weight="1.5"
+                android:src="@drawable/main_activity_communist" />
+
             <TextView
-                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:layout_weight="3.5"
-                android:textSize="10sp"
                 android:gravity="center"
                 android:text="@string/communist"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/mine"
-            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:weightSum="5"
-            >
+            android:weightSum="5">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1.5"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/main_activity_mine"
-                />
+                android:layout_weight="1.5"
+                android:src="@drawable/main_activity_mine" />
+
             <TextView
-                android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
                 android:layout_weight="3.5"
-                android:textSize="10sp"
                 android:gravity="center"
                 android:text="我"
-                />
+                android:textColor="#ffffff"
+                android:textSize="10sp" />
 
         </LinearLayout>
     </LinearLayout>

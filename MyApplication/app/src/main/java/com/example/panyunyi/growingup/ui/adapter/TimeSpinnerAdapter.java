@@ -32,7 +32,7 @@ public class TimeSpinnerAdapter implements SpinnerAdapter {
         convertView = LayoutInflater.from(mContext).inflate(R.layout.time_spinner_item,null);
         if (convertView != null) {
             TextView textView = (TextView) convertView.findViewById(R.id.time_spinner_item);
-            if (timeList.get(position).getTimeStatus().equals("-1") || timeList.get(position).getTimeStatus().equals("1")) {
+            if (timeList.get(position).getTimeStatus().equals("2") || timeList.get(position).getTimeStatus().equals("1")) {
 
             } else {
                 textView.setText(timeList.get(position).getTimeDetail());

@@ -41,6 +41,7 @@ dependencies {
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.alibaba:fastjson:1.1.59.android'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.lorentzos.swipecards:library:1.0.9@aar'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }

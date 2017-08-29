@@ -1,5 +1,6 @@
 package com.example.panyunyi.growingup.ui.dialog;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.TextViewCompat;
@@ -19,11 +20,26 @@ import java.util.zip.Inflater;
 
 public class ContentDialog extends android.support.v4.app.DialogFragment {
     private TextView textView;
-
+    public boolean isDismiss=false;
 
     String mContent;
     public ContentDialog() {
     }
+
+    @Override
+    public boolean getShowsDialog() {
+
+        return super.getShowsDialog();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        dialog.dismiss();
+        isDismiss=true;
+
+        super.onDismiss(dialog);
+    }
+
     public static ContentDialog newInstance(String content) {
         ContentDialog contentDialog = new ContentDialog();
         Bundle args = new Bundle();
@@ -41,4 +57,6 @@ public class ContentDialog extends android.support.v4.app.DialogFragment {
 
         return view;
     }
+
+
 }

@@ -5,8 +5,24 @@
     android:layout_height="match_parent"
 
     >
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="预约"
+    android:gravity="center_horizontal"
+    android:textSize="25sp"
+android:background="@drawable/button_background"
 
+    />
+    <TextView
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="预约显示时间均为本周相应时间，预约后请在：我的-消息 及时查看相关进度"
+        android:background="@drawable/button_background"
+        />
     <Spinner
+        android:layout_marginTop="32dp"
         android:id="@+id/order_time_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,8 +35,8 @@
         android:layout_marginTop="120dp"
         android:id="@+id/send_order"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:src="@drawable/send"
         />
 </LinearLayout>

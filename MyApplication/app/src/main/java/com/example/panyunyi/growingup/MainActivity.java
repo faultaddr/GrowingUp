@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,7 +29,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.example.panyunyi.growingup.entity.remote.GArticleEntity;
 import com.example.panyunyi.growingup.entity.remote.GTeacherEntity;
-import com.example.panyunyi.growingup.manager.LoginSession;
 import com.example.panyunyi.growingup.service.MsgService;
 import com.example.panyunyi.growingup.ui.activity.AcceptActivity;
 import com.example.panyunyi.growingup.ui.activity.InspireActivity;
@@ -106,6 +106,13 @@ public class MainActivity extends BaseActivity {
     RecyclerView knowledgeNews;
     @BindView(R.id.main)
     PercentRelativeLayout main;
+
+    //头部搜索框
+    @BindView(R.id.title_find)
+    EditText titleFind;
+    @BindView(R.id.search)
+    ImageView search;
+
     int count = 0;
     ScheduledExecutorService scheduler =
             Executors.newSingleThreadScheduledExecutor();
@@ -123,7 +130,7 @@ public class MainActivity extends BaseActivity {
     ArrayList<ImageView> imageViews = new ArrayList<>();
     //轮播图片 URL 数组
     private Context mContext;
-    private MsgService msgService=new MsgService();
+    private MsgService msgService = new MsgService();
     ServiceConnection conn = new ServiceConnection() {
 
         @Override
@@ -234,8 +241,18 @@ public class MainActivity extends BaseActivity {
         main.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         initAdapter();//初始化适配器
         //每隔2秒钟切换一张图片
+        initSearchListener();
 
+    }
 
+    private void initSearchListener() {
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String s=titleFind.getText().toString();
+                //TODO 这里做相关的搜索操作（暂时还没想好）
+            }
+        });
     }
 
     private void initData() {
@@ -268,6 +285,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initAdapter() {
+        //监听 搜索框：
+
+
         //初始化 RecycleViewAdapter：
         teacherList.setHasFixedSize(true);
         knowledgeNews.setHasFixedSize(true);
@@ -429,9 +449,9 @@ public class MainActivity extends BaseActivity {
                 /*
                 * 显示全部
                 * */
-                try {
+ /*               try {
                     ExecutorService exs = Executors.newCachedThreadPool();
-                    Post p = new Post(Constant.API_URL + "/showArticle", "aaa");
+                    Post p = new Post(Constant.API_URL + "/showArticleAll", "aaa");
                     Future<Object> future = exs.submit(p);//使用线程池对象执行任务并获取返回对象
                     try {
                         result = future.get().toString();//当调用了future的get方法获取返回的值得时候
@@ -446,7 +466,12 @@ public class MainActivity extends BaseActivity {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/;
+                WebViewDialog dialog = WebViewDialog.newInstance(Constant.API_URL+"/showArticleAll");
+
+
+                dialog.show(getSupportFragmentManager(), "articleAll");
+
                 break;
             case R.id.haveAChange:
                 /*

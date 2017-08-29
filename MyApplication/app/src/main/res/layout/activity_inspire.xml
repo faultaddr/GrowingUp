@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
     tools:context="com.example.panyunyi.growingup.ui.activity.InspireActivity">
+    <View
+        android:layout_width="350dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:background="@color/gray"
+        ></View>
+    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:rotation_degrees="16"
+        app:max_visible="4"
+        app:min_adapter_stack="6"
+        android:id="@+id/frame"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:gravity="center_vertical"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/inspire_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/inspire_activity_disagree"
+            />
+        <ImageView
+            android:id="@+id/inspire_like"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
 
-    <include layout="@layout/content_inspire" />
+            android:src="@drawable/inspire_activity_agree"
+            />
+    </RelativeLayout>
 
+<TextView
+    android:id="@+id/inspire_detail"
+    android:layout_weight="1"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:textSize="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
-
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
