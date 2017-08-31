@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.panyunyi.growingup">
-
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE" />
-
+    
     <supports-gl-texture android:name="GL_OES_compressed_ETC1_RGB8_texture" />
     <supports-gl-texture android:name="GL_OES_compressed_paletted_texture" />
 
@@ -49,7 +48,8 @@
             android:label="@string/title_activity_inspire"
             android:theme="@style/AppTheme" />
         <activity android:name=".TestActivty" />
-        <activity android:name=".ui.activity.MineActivity" />
+        <activity android:name=".ui.activity.MineActivity"
+            android:launchMode="singleInstance"/>
         <activity android:name=".ui.activity.AcceptActivity" />
         <activity android:name=".ui.activity.ProfileActivity" />
         <activity android:name=".ui.activity.PartyActivity" />
